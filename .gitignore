@@ -1,0 +1,26 @@
+# Compiled source files
+*.exe
+*.out
+*.o
+*.obj
+
+# Visual Studio Code settings
+.vscode/
+
+# CMake build folders
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Windows junk
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+
+# Ignore nested repos accidentally created
+practice/practice/
