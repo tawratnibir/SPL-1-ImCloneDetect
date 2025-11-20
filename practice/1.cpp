@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include<algorithm>
 using namespace std;
 #pragma pack(push, 1)
 struct BMPFileHeader
@@ -47,6 +48,7 @@ struct BMP
 
     BMP(const char *fName)
     {
+        read(fName);
     }
 
     void read(const char *fName)
@@ -72,13 +74,57 @@ struct BMP
                 {
                     inp.read((char *)&bmpColorHeader, sizeof(BMPColorHeader));
                     checkColorHeader(bmpColorHeader);
-                } else{
-                    std::cerr << "Warning! The file \"" << fName << "Warning! The file \"" << fname << "\" does not seem to contain bit mask information\n";
+                }
+                else
+                {
+                    std::cerr << "Warning! The file \"" << fName << "Warning! The file \"" << fName << "\" does not seem to contain bit mask information\n";
                     throw std::runtime_error("Error! Unrecognized file format");
                 }
             }
 
             inp.seekg(fileHeader.offsetData, inp.beg);
+
+            if (bmpInfoHeader.bitCount == 32)
+            {
+                bmpInfoHeader.size = sizeof(BMPInfoHeader) + sizeof(BMPColorHeader);
+                fileHeader.offsetData = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + sizeof(BMPColorHeader);
+            }
+            else
+            {
+                bmpInfoHeader.size = sizeof(BMPInfoHeader);
+                fileHeader.offsetData = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
+            }
+            fileHeader.fileSize = fileHeader.offsetData;
+
+            if (bmpInfoHeader.height < 0)
+            {
+                throw std::runtime_error("Can't read BMP image properly for negative height!\n");
+            }
+
+            data.resize(bmpInfoHeader.height * bmpInfoHeader.width * bmpInfoHeader.bitCount / 8);
+            if (bmpInfoHeader.width % 4 == 0)
+            {
+                inp.read((char *)data.data(), data.size());
+                fileHeader.fileSize += data.size();
+            }
+            else
+            {
+                rowStride = bmpInfoHeader.width * bmpInfoHeader.bitCount / 8;
+                uint32_t newStride = makeStrideAligned(4);
+
+                uint32_t padding = newStride - rowStride;
+
+                for (int y = 0; y < bmpInfoHeader.height; y++)
+                {
+                    inp.read((char *)(data.data() + rowStride * y), rowStride);
+                    inp.seekg(padding, std::ios::cur);
+                }
+                fileHeader.fileSize += data.size() + bmpInfoHeader.height * padding;
+            }
+        }
+        else
+        {
+            throw std::runtime_error("Unable to open the file!\n");
         }
     }
 
@@ -88,9 +134,75 @@ struct BMP
 
     void write(const char *fName)
     {
+        std::ofstream of{fName, std::ios::binary};
+        if(of) {
+            if(bmpInfoHeader.bitCount == 32) {
+                writeHeadersAndData(of);
+            } else if(bmpInfoHeader.bitCount == 24){
+                if(bmpInfoHeader.width % 4 == 0) {
+                    writeHeadersAndData(of);
+                } else{
+                    rowStride = bmpInfoHeader.width * bmpInfoHeader.bitCount / 8;
+                    uint32_t newStride = makeStrideAligned(4);
+                    uint32_t padding = newStride - rowStride;
+                    
+                    writeHeaders(of);
+
+                    for (int y = 0; y < bmpInfoHeader.height; ++y)
+                    {
+                        of.write((const char*)(data.data() + rowStride * y), rowStride);
+                        for(uint32_t i=0; i < padding; ++i) {
+                            of.put('\0');
+                        }
+                    }
+                    
+                }
+            } else{
+                throw std::runtime_error("Only 24 or 32 bit bmp is available!\n");
+            }
+        } else{
+            throw std::runtime_error("Unable to open the output image!\n");
+        }
+    }
+
+    double imageSize()
+    {
+        return fileHeader.fileSize / 1024.0;
+    }
+
+    uint16_t imageType()
+    {
+        return fileHeader.fileType;
     }
 
 private:
+    uint32_t rowStride{0};
+
+    void writeHeaders(std::ofstream &of)
+    {
+        of.write((const char*)&fileHeader, sizeof(fileHeader));
+        of.write((const char*)&bmpInfoHeader, sizeof(bmpInfoHeader));
+
+        if(bmpInfoHeader.bitCount == 32) {
+            of.write((const char*)&bmpColorHeader, sizeof(bmpColorHeader));
+        }
+    }
+    void writeHeadersAndData(std::ofstream &of)
+    {
+        writeHeaders(of);
+        of.write((const char*)data.data(), data.size());
+    }
+
+    uint32_t makeStrideAligned(uint32_t alignStride)
+    {
+        uint32_t newStride = rowStride;
+
+        while (newStride % 4 != 0)
+        {
+            newStride++;
+        }
+        return newStride;
+    }
     void checkColorHeader(BMPColorHeader &bmpColorHeader)
     {
         BMPColorHeader expectedColorHeader;
@@ -102,14 +214,14 @@ private:
         {
             throw std::runtime_error(
                 "Unexpected color mask format !"
-                "The program expects the pixel data to be in BGRA format.")
+                "The program expects the pixel data to be in BGRA format.");
         }
 
         if (expectedColorHeader.colorSpaceType != bmpColorHeader.colorSpaceType)
         {
             throw std::runtime_error(
                 "Unexpected color space type! "
-                "The program expects the pixel data to be in BGRA format.")
+                "The program expects the pixel data to be in BGRA format.");
         }
     }
 };
