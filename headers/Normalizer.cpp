@@ -56,3 +56,6 @@ void toGrayScale(BMP source, const char *destinationFileName)
     source.write(destinationFileName);
     return;
 }
+std::vector<uint8_t> pixelGenerator(BMP source) {
+    return source.data;
+}
