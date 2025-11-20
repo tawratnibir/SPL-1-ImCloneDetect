@@ -1,7 +1,8 @@
-#include "../headers/BMP.h"
-#include<vector>
-#include<iostream>
-void toNegative(BMP source, const char* destinationFileName)
+#include "BMP.h"
+#include "Normalizer.h"
+#include <vector>
+#include <iostream>
+void toNegative(BMP source, const char *destinationFileName)
 {
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
@@ -25,7 +26,8 @@ void toNegative(BMP source, const char* destinationFileName)
     source.write(destinationFileName);
     return;
 }
-void toGrayScale(BMP source, const char* destinationFileName) {
+void toGrayScale(BMP source, const char *destinationFileName)
+{
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
     int bpp = source.bmpInfoHeader.bitCount / 8;
@@ -45,7 +47,6 @@ void toGrayScale(BMP source, const char* destinationFileName) {
 
             uint8_t Y = 0.299 * R + 0.587 * G + 0.114 * B;
 
-
             pixels[idx + 0] = Y;
             pixels[idx + 1] = Y;
             pixels[idx + 2] = Y;
@@ -54,10 +55,4 @@ void toGrayScale(BMP source, const char* destinationFileName) {
     source.data = pixels;
     source.write(destinationFileName);
     return;
-}
-int main() {
-    BMP source("tester.bmp");
-    BMP temp = source;
-    toNegative(source, "neg45.bmp");
-    toGrayScale(source, "gray45.bmp");
 }
