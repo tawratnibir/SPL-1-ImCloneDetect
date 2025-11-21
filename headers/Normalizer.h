@@ -2,6 +2,12 @@
 
 #include "BMP.h"
 #include<vector>
-void toNegative(BMP source, const char *destinationFileName);
-void toGrayScale(BMP source, const char *destinationFileName);
+#include<cmath>
+#include<iomanip>
+std::vector<uint8_t> toNegative(BMP source, const char *destinationFileName);
+std::vector<uint8_t> toGrayScale(BMP source, const char *destinationFileName);
+std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName);
 std::vector<uint8_t> pixelGenerator(BMP source);
+double gaussian(double x, double y, double sigma);
+std::vector<std::vector<double>> createKernel(int kernelRadius, double sigma);
+
