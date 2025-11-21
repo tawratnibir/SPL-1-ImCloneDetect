@@ -2,8 +2,8 @@
 #include "Normalizer.h"
 #include <vector>
 #include <iostream>
-#include<cmath>
-#include<iomanip>
+#include <cmath>
+#include <iomanip>
 std::vector<uint8_t> toNegative(BMP source, const char *destinationFileName)
 {
     int height = source.bmpInfoHeader.height;
@@ -58,7 +58,8 @@ std::vector<uint8_t> toGrayScale(BMP source, const char *destinationFileName)
     source.write(destinationFileName);
     return pixels;
 }
-std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName) {
+std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName)
+{
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
     int bpp = source.bmpInfoHeader.bitCount / 8;
@@ -87,26 +88,33 @@ std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const 
     source.write(destinationFileName);
     return pixels;
 }
-std::vector<uint8_t> pixelGenerator(BMP source) {
+std::vector<uint8_t> pixelGenerator(BMP source)
+{
     return source.data;
 }
-double gaussian(double x, double y, double sigma) {
+double gaussian(double x, double y, double sigma)
+{
     return ((1.0 / (2.0 * M_PI * sigma * sigma)) * std::exp(-(x * x + y * y) / (2.0 * sigma * sigma)));
 }
-std::vector<std::vector<double>> createKernel(int kernelRadius, double sigma) {
+std::vector<std::vector<double>> createKernel(int kernelRadius, double sigma)
+{
     int kernelSize = 2 * kernelRadius + 1;
     std::vector<std::vector<double>> kernel(kernelSize, std::vector<double>(kernelSize));
     double sum = 0;
-    for(int i = -kernelRadius; i <= kernelRadius; ++i) {
-        for(int j = -kernelRadius; j <= kernelRadius; ++j) {
+    for (int i = -kernelRadius; i <= kernelRadius; ++i)
+    {
+        for (int j = -kernelRadius; j <= kernelRadius; ++j)
+        {
             kernel[i + kernelRadius][j + kernelRadius] = gaussian(i, j, sigma);
-            sum+=kernel[i + kernelRadius][j + kernelRadius];
+            sum += kernel[i + kernelRadius][j + kernelRadius];
         }
     }
 
-    for(int i=0;i<kernelSize;i++) {
-        for(int j=0;j<kernelSize;j++) {
-            kernel[i][j]/=sum;
+    for (int i = 0; i < kernelSize; i++)
+    {
+        for (int j = 0; j < kernelSize; j++)
+        {
+            kernel[i][j] /= sum;
         }
     }
     return kernel;
