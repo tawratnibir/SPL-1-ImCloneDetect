@@ -4,7 +4,8 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
-double gaussian(double x, double y, double sigma) {
+double gaussian(double x, double y, double sigma)
+{
     return (1.0 / (2.0 * M_PI * sigma * sigma)) * std::exp(-(x * x + y * y) / (2.0 * sigma * sigma));
 }
 std::vector<std::vector<double>> createKernel(int kernelRadius, double sigma)
@@ -74,10 +75,21 @@ std::vector<uint8_t> toGrayScale(BMP source, const char *destinationFileName)
             uint8_t R = pixels[idx + 2];
 
             uint8_t Y = 0.299 * R + 0.587 * G + 0.114 * B;
-
-            pixels[idx + 0] = Y;
-            pixels[idx + 1] = Y;
-            pixels[idx + 2] = Y;
+            if (Y > 54)
+            {
+                pixels[idx + 0] = Y;
+                pixels[idx + 1] = Y;
+                pixels[idx + 2] = Y;
+            }
+            else
+            {
+                pixels[idx + 0] = 0;
+                pixels[idx + 1] = 0;
+                pixels[idx + 2] = 0;
+            }
+            // pixels[idx + 0] = Y - 40;
+            // pixels[idx + 1] = Y - 40;
+            // pixels[idx + 2] = Y - 40;
         }
     }
     source.data = pixels;
@@ -98,8 +110,10 @@ std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const 
         for (int x = kernelRadius; x < width - kernelRadius; ++x)
         {
             uint8_t valB = 0, valG = 0, valR = 0;
-            for(int i = x - kernelRadius; i < x + kernelRadius ; ++i) {
-                for(int j = y - kernelRadius ; j < y + kernelRadius; ++j) {
+            for (int i = x - kernelRadius; i < x + kernelRadius; ++i)
+            {
+                for (int j = y - kernelRadius; j < y + kernelRadius; ++j)
+                {
                     int idx = j * rowStride + i * bpp;
                     valB += ((uint8_t)(pixels[idx + 0] * kernel[i - x + kernelRadius][j - y + kernelRadius]));
                     valG += ((uint8_t)(pixels[idx + 1] * kernel[i - x + kernelRadius][j - y + kernelRadius]));
