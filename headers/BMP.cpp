@@ -84,6 +84,7 @@ void BMP::read(const char *fName)
     }
     else
     {
+        std::cout << fName << std::endl;
         throw std::runtime_error("Unable to open the file!\n");
     }
 }

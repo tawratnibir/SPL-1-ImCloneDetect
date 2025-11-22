@@ -31,7 +31,7 @@ std::vector<std::vector<double>> createKernel(int kernelRadius, double sigma)
     }
     return kernel;
 }
-std::vector<uint8_t> toNegative(BMP source, const char *destinationFileName)
+BMP toNegative(BMP source, const char *destinationFileName)
 {
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
@@ -53,9 +53,9 @@ std::vector<uint8_t> toNegative(BMP source, const char *destinationFileName)
     }
     source.data = pixels;
     source.write(destinationFileName);
-    return pixels;
+    return source;
 }
-std::vector<uint8_t> toGrayScale(BMP source, const char *destinationFileName)
+BMP toGrayScale(BMP source, const char *destinationFileName)
 {
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
@@ -94,9 +94,9 @@ std::vector<uint8_t> toGrayScale(BMP source, const char *destinationFileName)
     }
     source.data = pixels;
     source.write(destinationFileName);
-    return pixels;
+    return source;
 }
-std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName)
+BMP toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName)
 {
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
@@ -128,7 +128,7 @@ std::vector<uint8_t> toGsBlur(BMP source, int kernelRadius, double sigma, const 
     }
     source.data = pixels;
     source.write(destinationFileName);
-    return pixels;
+    return source;
 }
 std::vector<uint8_t> pixelGenerator(BMP source)
 {
