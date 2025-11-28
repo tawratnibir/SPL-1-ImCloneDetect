@@ -91,6 +91,34 @@ void BMP::read(const char *fName)
 
 BMP::BMP(int32_t width, int32_t height, bool hasAlpha = true)
 {
+    if(width <= 0 || height <= 0) {
+        throw  std::runtime_error("Must be a valid image dimension");
+    }
+
+    bmpInfoHeader.width = width;
+    bmpInfoHeader.height = height;
+
+    if(hasAlpha) {
+        bmpInfoHeader.size = sizeof(BMPInfoHeader) + sizeof(BMPColorHeader);
+        fileHeader.offsetData = sizeof(BMPInfoHeader) + sizeof(BMPColorHeader) + sizeof(BMPFileHeader);
+
+        bmpInfoHeader.bitCount = 32;
+        bmpInfoHeader.compression = 3;
+        rowStride = bmpInfoHeader.width * 4;
+        data.resize(height * rowStride);
+        fileHeader.fileSize = fileHeader.offsetData + data.size();
+    } else{
+        bmpInfoHeader.size = sizeof(BMPInfoHeader);
+        fileHeader.offsetData = sizeof(BMPInfoHeader) + sizeof(BMPFileHeader);
+
+        bmpInfoHeader.bitCount = 24;
+        bmpInfoHeader.compression = 0;
+        rowStride = bmpInfoHeader.width * 3;
+        data.resize(height * rowStride);
+        
+        uint32_t newStride = makeStrideAligned(4);
+        fileHeader.fileSize = fileHeader.offsetData + data.size() + bmpInfoHeader.height * (newStride - rowStride);
+    }
 }
 
 void BMP::write(const char *fName)

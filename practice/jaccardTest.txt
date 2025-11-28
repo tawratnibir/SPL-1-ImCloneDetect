@@ -1,4 +1,12 @@
 File read successfully
 File read successfully
-3200 130864
-Similarity: 0.975547
+File read successfully
+File read successfully
+File read successfully
+File read successfully
+File read successfully
+File read successfully
+Normal images, Similarity: 1
+Grayscale, Similarity: 1
+Blur, Similarity: 1
+Negative blur, Similarity: 1

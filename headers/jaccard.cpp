@@ -28,6 +28,7 @@ std::vector<std::vector<uint8_t>> pixelVectorGenerator(BMP image, int maxWidth, 
             imageNorm[y].push_back((uint8_t)0);
         }
     }
+    reverse(imageNorm.begin(), imageNorm.end());
     return imageNorm;
 }
 double jaccardDistance(BMP &image1, BMP &image2)
@@ -50,13 +51,13 @@ double jaccardDistance(BMP &image1, BMP &image2)
     {
         for (int j = 0; j < maxWidth; ++j)
         {
-            bool a = (imageNorm1[i][j] != 255);
-            bool b = (imageNorm2[i][j] != 255);
+            bool a = (imageNorm1[i][j] != 0);
+            bool b = (imageNorm2[i][j] != 0);
 
             if(a || b) sum++;
             if(a != b) diff++;
         }
     }
-    cout << diff << " " << sum << endl;
+    // cout << diff << " " << sum << endl;
     return diff / sum;
 }
