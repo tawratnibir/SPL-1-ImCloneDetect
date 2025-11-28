@@ -1,12 +1,4 @@
-File read successfully
-File read successfully
-File read successfully
-File read successfully
-File read successfully
-File read successfully
-File read successfully
-File read successfully
-Normal images, Similarity: 1
-Grayscale, Similarity: 1
-Blur, Similarity: 1
-Negative blur, Similarity: 1
+Normal images, Similarity: 0.938942
+Grayscale, Similarity: 0.159922
+Blur, Similarity: 0.488492
+Negative blur, Similarity: 0.940408

@@ -1,8 +1,8 @@
-#include <iostream>
-#include <vector>
-#include "../headers/BMP.h"
-#include "../headers/Normalizer.h"
-#include <string.h>
+// #include <iostream>
+// #include <vector>
+// #include "../headers/BMP.h"
+// #include "../headers/Normalizer.h"
+// #include <string.h>
 #include "../headers/jaccard.h"
 int main()
 {
