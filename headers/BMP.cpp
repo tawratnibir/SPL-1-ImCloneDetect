@@ -13,6 +13,7 @@ BMP::BMP(const char *fName)
 
 void BMP::read(const char *fName)
 {
+    fileName = fName;
     std::ifstream inp{fName, std::ios_base::binary};
     if (inp)
     {
@@ -23,7 +24,7 @@ void BMP::read(const char *fName)
         }
         else
         {
-            cout << "File read successfully\n";
+            cerr << "File read successfully\n";
         }
         inp.read((char *)&bmpInfoHeader, sizeof(bmpInfoHeader));
 
@@ -91,14 +92,16 @@ void BMP::read(const char *fName)
 
 BMP::BMP(int32_t width, int32_t height, bool hasAlpha = true)
 {
-    if(width <= 0 || height <= 0) {
-        throw  std::runtime_error("Must be a valid image dimension");
+    if (width <= 0 || height <= 0)
+    {
+        throw std::runtime_error("Must be a valid image dimension");
     }
 
     bmpInfoHeader.width = width;
     bmpInfoHeader.height = height;
 
-    if(hasAlpha) {
+    if (hasAlpha)
+    {
         bmpInfoHeader.size = sizeof(BMPInfoHeader) + sizeof(BMPColorHeader);
         fileHeader.offsetData = sizeof(BMPInfoHeader) + sizeof(BMPColorHeader) + sizeof(BMPFileHeader);
 
@@ -107,7 +110,9 @@ BMP::BMP(int32_t width, int32_t height, bool hasAlpha = true)
         rowStride = bmpInfoHeader.width * 4;
         data.resize(height * rowStride);
         fileHeader.fileSize = fileHeader.offsetData + data.size();
-    } else{
+    }
+    else
+    {
         bmpInfoHeader.size = sizeof(BMPInfoHeader);
         fileHeader.offsetData = sizeof(BMPInfoHeader) + sizeof(BMPFileHeader);
 
@@ -115,7 +120,7 @@ BMP::BMP(int32_t width, int32_t height, bool hasAlpha = true)
         bmpInfoHeader.compression = 0;
         rowStride = bmpInfoHeader.width * 3;
         data.resize(height * rowStride);
-        
+
         uint32_t newStride = makeStrideAligned(4);
         fileHeader.fileSize = fileHeader.offsetData + data.size() + bmpInfoHeader.height * (newStride - rowStride);
     }

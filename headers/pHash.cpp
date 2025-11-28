@@ -28,11 +28,13 @@ vector<vector<double>> dct(vector<vector<uint8_t>> sourceVector)
                 cj = sqrt(2) / sqrt(n);
 
             sum = 0;
-            for (int k = 0; k < n; k++) {
-                for (int l = 0; l < m; l++) {
-                    dctTemp = sourceVector[k][l] * 
-                           cos((2 * k + 1) * i * pi / (2 * m)) * 
-                           cos((2 * l + 1) * j * pi / (2 * n));
+            for (int k = 0; k < n; k++)
+            {
+                for (int l = 0; l < m; l++)
+                {
+                    dctTemp = sourceVector[k][l] *
+                              cos((2 * k + 1) * i * pi / (2 * m)) *
+                              cos((2 * l + 1) * j * pi / (2 * n));
                     sum = sum + dctTemp;
                 }
             }
@@ -46,41 +48,46 @@ std::string generateHash(BMP source, int k, int l)
 {
     int height = source.bmpInfoHeader.height;
     int width = source.bmpInfoHeader.width;
-    // cout << height << " " << width << endl;
+
     std::vector<vector<uint8_t>> pixelValues = pixelVectorGenerator(source, width, height);
-    for(int i=0;i<height;i++) {
-        for(int j=0;j<width;j++) {
-            cout << (int)pixelValues[i][j] << "   ";
-        }
-        cout << endl;
-    }
     std::vector<vector<double>> dctPixelValues = dct(pixelValues);
     string hashValue;
     double avg = 0;
-    for(int i=0;i<k;i++) {
-        for(int j=0;j<l;j++) {
-            if(i == 0 && j == 0) continue;
+    for (int i = 0; i < k; i++)
+    {
+        for (int j = 0; j < l; j++)
+        {
+            if (i == 0 && j == 0)
+                continue;
             avg += dctPixelValues[i][j];
         }
     }
     avg /= (k * l - 1);
 
-    for(int i=0;i<k;i++) {
-        for(int j=0;j<l;j++) {
+    for (int i = 0; i < k; i++)
+    {
+        for (int j = 0; j < l; j++)
+        {
             // if(i == 0 && j == 0) continue;
-            if(dctPixelValues[i][j] > avg) {
+            if (dctPixelValues[i][j] > avg)
+            {
                 hashValue.push_back('1');
-            } else hashValue.push_back('0');
+            }
+            else
+                hashValue.push_back('0');
         }
     }
-    return hashValue;    
+    return hashValue;
 }
-double pHash(string s1, string s2) {
+double pHash(string s1, string s2)
+{
     int n = s1.size();
     int diff = 0;
     int sum = n;
-    for(int i=0;i<n;i++) {
-        if(s1[i] != s2[i]) diff++;
+    for (int i = 0; i < n; i++)
+    {
+        if (s1[i] != s2[i])
+            diff++;
     }
 
     return (1.0 - ((double)diff / sum));

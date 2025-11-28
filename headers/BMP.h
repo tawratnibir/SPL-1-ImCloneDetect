@@ -49,7 +49,7 @@ struct BMP
     BMPFileHeader fileHeader;
     BMPInfoHeader bmpInfoHeader;
     BMPColorHeader bmpColorHeader;
-
+    string fileName;
     vector<uint8_t> data;
 
     BMP(const char *fName);
