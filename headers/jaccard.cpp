@@ -64,6 +64,5 @@ double jaccardDistance(BMP &image1, BMP &image2)
                 diff++;
         }
     }
-    // cout << diff << " " << sum << endl;
-    return diff / sum;
+    return 1 - (diff / sum);
 }

@@ -1,0 +1,11 @@
+g++ -o main.exe main.cpp ..\headers\BMP.h ..\headers\Normalizer.h ..\headers\jaccard.h ..\headers\pHash.h
+vector<string> files = {"..\inputImages\bubble_1.bmp",
+"..\inputImages\bubble_2.bmp",
+"..\inputImages\bubble_3.bmp",
+"..\inputImages\bubble_4.bmp",
+"..\inputImages\bubble_5.bmp",
+"..\inputImages\insertion_1.bmp",
+"..\inputImages\insertion_2.bmp",
+"..\inputImages\insertion_3.bmp",
+"..\inputImages\insertion_4.bmp",
+"..\inputImages\insertion_5.bmp"};
