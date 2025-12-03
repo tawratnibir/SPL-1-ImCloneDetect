@@ -28,7 +28,8 @@ string fileNameTrimmer(string fileName, string type, string extension)
             break;
         }
     }
-    for (int i = ptr+1; i < n - 4; i++)
+    if(ptr == 0) ptr = -1;
+    for (int i = ptr + 1; i < n - 4; i++)
     {
         newFileName.push_back(fileName[i]);
     }
@@ -42,10 +43,11 @@ void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 {
     fstream fout;
 
-    fout.open(csvDir+csvFileName, std::ios::out);
-    cout << csvDir + csvFileName << endl;
+    fout.open(csvDir + csvFileName, std::ios::out);
+    cout << "Saving to: " << csvDir + csvFileName << endl;
     fout << title << "\n";
-    for(auto x:filePairs) {
+    for (auto x : filePairs)
+    {
         fout << x.file1 << ", " << x.file2 << ", " << x.similarity << "\n";
     }
 
@@ -70,7 +72,7 @@ void jaccardCalculate(vector<string> files)
 
             const char *grayPtrOne = grayStrOne.c_str();
             const char *grayPtrTwo = grayStrTwo.c_str();
-            // cout << grayPtrOne << "\n" << grayPtrTwo << endl;
+
             BMP imageOne(files[i].c_str());
             BMP imageTwo(files[j].c_str());
 
@@ -91,20 +93,24 @@ void jaccardCalculate(vector<string> files)
             itr++;
         }
     }
+    writeToCsv("/jaccardSims.csv", filePairs);
 }
-void pHashCalculator(vector<string> files) {
+void pHashCalculator(vector<string> files)
+{
     int n = files.size();
     vector<filePairSimilarity> filePairs(n * (n - 1) / 2);
     int itr = 0;
-    for(int i=0;i<n;i++) {
-        for(int j=i+1;j<n;j++) {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
             string fileNameOne = fileNameTrimmer(files[i], "", "bmp");
             string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
             string resOne = resizeDir + fileNameOne;
             string resTwo = resizeDir + fileNameTwo;
 
-            const char* resPtrOne = resOne.c_str();
-            const char* resPtrTwo = resTwo.c_str();
+            const char *resPtrOne = resOne.c_str();
+            const char *resPtrTwo = resTwo.c_str();
 
             BMP resImgOne(resPtrOne);
             BMP resImgTwo(resPtrTwo);
@@ -128,21 +134,6 @@ void pHashCalculator(vector<string> files) {
 int main()
 {
     freopen("res.txt", "w", stdout);
-    // BMP image("../practice/bubble_test_1.bmp");
-    // string fileName = image.fileName;
-    // string newFileName = fileNameTrimmer(fileName, "gray", "bmp");
-
-    // // newFileName.pop_back();
-    // // newFileName.pop_back();
-    // // newFileName.pop_back();
-    // // newFileName.pop_back();
-
-    // // newFileName += "_gray.bmp";
-
-    // newFileName = grayDir + newFileName;
-    // const char* finalDir = newFileName.c_str();
-    // cout << finalDir << endl;
-    // toGrayScale(image, finalDir);
     vector<string> files = {"../resizedImage/bitmask32_bubble_1_gray.bmp",
                             "../resizedImage/bitmask32_bubble_2_gray.bmp",
                             "../resizedImage/bitmask32_bubble_3_gray.bmp",
@@ -153,9 +144,16 @@ int main()
                             "../resizedImage/bitmask32_insertion_3_gray.bmp",
                             "../resizedImage/bitmask32_insertion_4_gray.bmp",
                             "../resizedImage/bitmask32_insertion_5_gray.bmp"};
-    // jaccardCalculate(files);
+    vector<string> filesJaccard = {"../inputImages/bubble_1.bmp",
+                            "../inputImages/bubble_2.bmp",
+                            "../inputImages/bubble_3.bmp",
+                            "../inputImages/bubble_4.bmp",
+                            "../inputImages/bubble_5.bmp",
+                            "../inputImages/insertion_1.bmp",
+                            "../inputImages/insertion_2.bmp",
+                            "../inputImages/insertion_3.bmp",
+                            "../inputImages/insertion_4.bmp",
+                            "../inputImages/insertion_5.bmp"};
+    jaccardCalculate(filesJaccard);
     pHashCalculator(files);
-    // BMP image("../inputImages/bubble_1.bmp");
-
-    // toGrayScale(image, "../outputGray/bubble_1_gray_2.bmp");
 }
