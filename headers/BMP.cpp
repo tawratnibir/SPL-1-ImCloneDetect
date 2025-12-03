@@ -38,7 +38,7 @@ void BMP::read(const char *fName)
             }
             else
             {
-                std::cerr << "Warning! The file \"" << fName << "Warning! The file \"" << fName << "\" does not seem to contain bit mask information\n";
+                std::cerr << "Warning! The file \"" << fName << "\" does not seem to contain bit mask information\n";
                 throw std::runtime_error("Error! Unrecognized file format");
             }
         }

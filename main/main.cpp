@@ -3,8 +3,12 @@
 #include "../headers/Normalizer.h"
 #include "../headers/pHash.h"
 
-#define grayDir "../outputGray"
+#define title "file1, file2, similarity"
+#define grayDir "../outputGray/"
 #define csvDir "../outCSV"
+#define resizeDir "../resizedImage/"
+#define hashWidth 8
+#define hashHeight 8
 struct filePairSimilarity
 {
     string file1;
@@ -24,7 +28,7 @@ string fileNameTrimmer(string fileName, string type, string extension)
             break;
         }
     }
-    for (int i = ptr; i < n - 4; i++)
+    for (int i = ptr+1; i < n - 4; i++)
     {
         newFileName.push_back(fileName[i]);
     }
@@ -34,11 +38,16 @@ string fileNameTrimmer(string fileName, string type, string extension)
         newFileName = newFileName + "." + extension;
     return newFileName;
 }
-void writeToCsv(string csvFileName, string title, vector<filePairSimilarity> filePairs)
+void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 {
     fstream fout;
 
-    fout.open(csvFileName, std::ios::out | std::ios::app);
+    fout.open(csvDir+csvFileName, std::ios::out);
+    cout << csvDir + csvFileName << endl;
+    fout << title << "\n";
+    for(auto x:filePairs) {
+        fout << x.file1 << ", " << x.file2 << ", " << x.similarity << "\n";
+    }
 
     fout.close();
 }
@@ -83,6 +92,39 @@ void jaccardCalculate(vector<string> files)
         }
     }
 }
+void pHashCalculator(vector<string> files) {
+    int n = files.size();
+    vector<filePairSimilarity> filePairs(n * (n - 1) / 2);
+    int itr = 0;
+    for(int i=0;i<n;i++) {
+        for(int j=i+1;j<n;j++) {
+            string fileNameOne = fileNameTrimmer(files[i], "", "bmp");
+            string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
+            string resOne = resizeDir + fileNameOne;
+            string resTwo = resizeDir + fileNameTwo;
+
+            const char* resPtrOne = resOne.c_str();
+            const char* resPtrTwo = resTwo.c_str();
+
+            BMP resImgOne(resPtrOne);
+            BMP resImgTwo(resPtrTwo);
+
+            string hashOne = generateHash(resImgOne, hashWidth, hashHeight);
+            string hashTwo = generateHash(resImgTwo, hashWidth, hashHeight);
+
+            double similarityScore = pHash(hashOne, hashTwo);
+
+            filePairs[itr].file1 = fileNameOne;
+            filePairs[itr].file2 = fileNameTwo;
+            filePairs[itr].similarity = similarityScore;
+
+            cout << fileNameOne << " " << fileNameTwo << " " << similarityScore << endl;
+
+            itr++;
+        }
+    }
+    writeToCsv("/pHashSims.csv", filePairs);
+}
 int main()
 {
     freopen("res.txt", "w", stdout);
@@ -101,18 +143,18 @@ int main()
     // const char* finalDir = newFileName.c_str();
     // cout << finalDir << endl;
     // toGrayScale(image, finalDir);
-    vector<string> files = {"../inputImages/bubble_1.bmp",
-                            "../inputImages/bubble_2.bmp",
-                            "../inputImages/bubble_3.bmp",
-                            "../inputImages/bubble_4.bmp",
-                            "../inputImages/bubble_5.bmp",
-                            "../inputImages/insertion_1.bmp",
-                            "../inputImages/insertion_2.bmp",
-                            "../inputImages/insertion_3.bmp",
-                            "../inputImages/insertion_4.bmp",
-                            "../inputImages/insertion_5.bmp"};
-    jaccardCalculate(files);
-
+    vector<string> files = {"../resizedImage/bitmask32_bubble_1_gray.bmp",
+                            "../resizedImage/bitmask32_bubble_2_gray.bmp",
+                            "../resizedImage/bitmask32_bubble_3_gray.bmp",
+                            "../resizedImage/bitmask32_bubble_4_gray.bmp",
+                            "../resizedImage/bitmask32_bubble_5_gray.bmp",
+                            "../resizedImage/bitmask32_insertion_1_gray.bmp",
+                            "../resizedImage/bitmask32_insertion_2_gray.bmp",
+                            "../resizedImage/bitmask32_insertion_3_gray.bmp",
+                            "../resizedImage/bitmask32_insertion_4_gray.bmp",
+                            "../resizedImage/bitmask32_insertion_5_gray.bmp"};
+    // jaccardCalculate(files);
+    pHashCalculator(files);
     // BMP image("../inputImages/bubble_1.bmp");
 
     // toGrayScale(image, "../outputGray/bubble_1_gray_2.bmp");
