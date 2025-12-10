@@ -1,4 +1,0 @@
-Normal images, Similarity: 0.938942
-Grayscale, Similarity: 0.159922
-Blur, Similarity: 0.488492
-Negative blur, Similarity: 0.940408

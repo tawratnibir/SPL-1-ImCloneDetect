@@ -1,7 +1,0 @@
-variant_blur.bmp : 96.875%
-variant_brightness.bmp : 100%
-variant_noise_strong.bmp : 100%
-variant_perspective.bmp : 48.4375%
-variant_rotate_25.bmp : 100%
-variant_shift_large.bmp : 68.75%
-variant_stretch.bmp : 98.4375%
