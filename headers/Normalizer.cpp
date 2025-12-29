@@ -53,6 +53,7 @@ BMP toNegative(BMP source, const char *destinationFileName)
     }
     source.data = pixels;
     source.write(destinationFileName);
+    source.fileName = destinationFileName;
     return source;
 }
 BMP toGrayScale(BMP source, const char *destinationFileName)
@@ -94,6 +95,7 @@ BMP toGrayScale(BMP source, const char *destinationFileName)
     }
     source.data = pixels;
     source.write(destinationFileName);
+    source.fileName = destinationFileName;
     return source;
 }
 BMP toGsBlur(BMP source, int kernelRadius, double sigma, const char *destinationFileName)
@@ -105,29 +107,47 @@ BMP toGsBlur(BMP source, int kernelRadius, double sigma, const char *destination
 
     vector<uint8_t> pixels = source.data;
     vector<vector<double>> kernel = createKernel(kernelRadius, sigma);
-    for (int y = kernelRadius; y < height - kernelRadius; ++y)
+    
+    for (int y = 0; y < height; ++y)
     {
-        for (int x = kernelRadius; x < width - kernelRadius; ++x)
+        for (int x = 0; x < width; ++x)
         {
-            uint8_t valB = 0, valG = 0, valR = 0;
-            for (int i = x - kernelRadius; i < x + kernelRadius; ++i)
+            double valB = 0.0, valG = 0.0, valR = 0.0;
+            
+            for (int i = -kernelRadius; i <= kernelRadius; ++i)
             {
-                for (int j = y - kernelRadius; j < y + kernelRadius; ++j)
+                for (int j = -kernelRadius; j <= kernelRadius; ++j)
                 {
-                    int idx = j * rowStride + i * bpp;
-                    valB += ((uint8_t)(pixels[idx + 0] * kernel[i - x + kernelRadius][j - y + kernelRadius]));
-                    valG += ((uint8_t)(pixels[idx + 1] * kernel[i - x + kernelRadius][j - y + kernelRadius]));
-                    valR += ((uint8_t)(pixels[idx + 2] * kernel[i - x + kernelRadius][j - y + kernelRadius]));
+                    int ni = x + i;
+                    int nj = y + j;
+                    
+                    if (ni < 0) ni = 0;
+                    if (ni >= width) ni = width - 1;
+                    if (nj < 0) nj = 0;
+                    if (nj >= height) nj = height - 1;
+                    
+                    int idx = nj * rowStride + ni * bpp;
+                    double kernelVal = kernel[j + kernelRadius][i + kernelRadius];
+                    
+                    valB += pixels[idx + 0] * kernelVal;
+                    valG += pixels[idx + 1] * kernelVal;
+                    valR += pixels[idx + 2] * kernelVal;
                 }
             }
+            
             int idx = y * rowStride + x * bpp;
-            pixels[idx + 0] = valB;
-            pixels[idx + 1] = valG;
-            pixels[idx + 2] = valR;
+            int outB = (int)std::round(valB);
+            int outG = (int)std::round(valG);
+            int outR = (int)std::round(valR);
+            
+            pixels[idx + 0] = (uint8_t)(outB > 255 ? 255 : (outB < 0 ? 0 : outB));
+            pixels[idx + 1] = (uint8_t)(outG > 255 ? 255 : (outG < 0 ? 0 : outG));
+            pixels[idx + 2] = (uint8_t)(outR > 255 ? 255 : (outR < 0 ? 0 : outR));
         }
     }
     source.data = pixels;
     source.write(destinationFileName);
+    source.fileName = destinationFileName;
     return source;
 }
 std::vector<uint8_t> pixelGenerator(BMP source)
@@ -219,5 +239,6 @@ BMP resizeBilinear(BMP source, int outHeight, int outWidth, const char *outFileN
 
     dest.data = dstData;
     dest.write(outFileName);
+    dest.fileName = outFileName;
     return dest;
 }
