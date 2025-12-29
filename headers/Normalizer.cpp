@@ -134,3 +134,90 @@ std::vector<uint8_t> pixelGenerator(BMP source)
 {
     return source.data;
 }
+BMP resizeBilinear(BMP source, int outHeight, int outWidth, const char *outFileName)
+{
+    int srcH = source.bmpInfoHeader.height;
+    int srcW = source.bmpInfoHeader.width;
+    int srcBpp = source.bmpInfoHeader.bitCount / 8;
+    int srcRowStride = srcW * srcBpp;
+
+    bool hasAlpha = (source.bmpInfoHeader.bitCount == 32);
+    BMP dest(outWidth, outHeight, hasAlpha);
+    int dstBpp = dest.bmpInfoHeader.bitCount / 8;
+    int dstRowStride = outWidth * dstBpp;
+
+    std::vector<uint8_t> dstData = dest.data;
+    const std::vector<uint8_t> &srcData = source.data;
+
+    double scaleY = (double)srcH / (double)outHeight;
+    double scaleX = (double)srcW / (double)outWidth;
+
+    for (int y = 0; y < outHeight; ++y)
+    {
+        double srcY = (y + 0.5) * scaleY - 0.5;
+        int y0 = (int)floor(srcY);
+        int y1 = y0 + 1;
+        double wy = srcY - y0;
+
+        if (y0 < 0)
+        {
+            y0 = 0;
+            y1 = 0;
+            wy = 0.0;
+        }
+        if (y1 >= srcH)
+        {
+            y1 = srcH - 1;
+            if (y0 >= srcH)
+                y0 = srcH - 1;
+        }
+
+        for (int x = 0; x < outWidth; ++x)
+        {
+            double srcX = (x + 0.5) * scaleX - 0.5;
+            int x0 = (int)floor(srcX);
+            int x1 = x0 + 1;
+            double wx = srcX - x0;
+
+            if (x0 < 0)
+            {
+                x0 = 0;
+                x1 = 0;
+                wx = 0.0;
+            }
+            if (x1 >= srcW)
+            {
+                x1 = srcW - 1;
+                if (x0 >= srcW)
+                    x0 = srcW - 1;
+            }
+
+            for (int c = 0; c < dstBpp; ++c)
+            {
+                int idx00 = y0 * srcRowStride + x0 * srcBpp + c;
+                int idx10 = y0 * srcRowStride + x1 * srcBpp + c;
+                int idx01 = y1 * srcRowStride + x0 * srcBpp + c;
+                int idx11 = y1 * srcRowStride + x1 * srcBpp + c;
+
+                double v00 = srcData[idx00];
+                double v10 = srcData[idx10];
+                double v01 = srcData[idx01];
+                double v11 = srcData[idx11];
+
+                double val = (1.0 - wx) * (1.0 - wy) * v00 + wx * (1.0 - wy) * v10 + (1.0 - wx) * wy * v01 + wx * wy * v11;
+
+                int didx = y * dstRowStride + x * dstBpp + c;
+                int outv = (int)std::round(val);
+                if (outv < 0)
+                    outv = 0;
+                if (outv > 255)
+                    outv = 255;
+                dstData[didx] = (uint8_t)outv;
+            }
+        }
+    }
+
+    dest.data = dstData;
+    dest.write(outFileName);
+    return dest;
+}
