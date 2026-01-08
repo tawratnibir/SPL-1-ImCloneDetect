@@ -52,20 +52,49 @@ struct BMP
     string fileName;
     vector<uint8_t> data;
 
+    /// @brief Constructs a BMP object and reads image data from file.
+    /// @param fName Path to the BMP file to read.
     BMP(const char *fName);
+    
+    /// @brief Reads BMP image data from the specified file.
+    /// @param fName Path to the BMP file to read.
     void read(const char *fName);
 
+    /// @brief Constructs a BMP object with specified dimensions.
+    /// @param width Image width in pixels.
+    /// @param height Image height in pixels.
+    /// @param hasAlpha Whether the image includes an alpha channel.
     BMP(int32_t width, int32_t height, bool hasAlpha);
+    
+    /// @brief Writes the BMP image to a file.
+    /// @param fName Path where the BMP file will be written.
     void write(const char *fName);
 
+    /// @brief Calculates the total size of the image in bytes.
+    /// @return Image size in bytes.
     double imageSize();
+    
+    /// @brief Retrieves the image type/format identifier.
+    /// @return Image type as uint16_t.
     uint16_t imageType();
 
 private:
     uint32_t rowStride{0};
 
+    /// @brief Writes BMP file headers to an output stream.
+    /// @param of Output file stream where headers will be written.
     void writeHeaders(std::ofstream &of);
+    
+    /// @brief Writes both headers and image data to an output stream.
+    /// @param of Output file stream where headers and data will be written.
     void writeHeadersAndData(std::ofstream &of);
+    
+    /// @brief Aligns row stride to the nearest multiple for proper BMP formatting.
+    /// @param alignStride Current stride value to align.
+    /// @return Aligned stride value.
     uint32_t makeStrideAligned(uint32_t alignStride);
+    
+    /// @brief Validates and corrects the BMP color header information.
+    /// @param bmpColorHeader Color header structure to validate and modify.
     void checkColorHeader(BMPColorHeader &bmpColorHeader);
 };
