@@ -3,9 +3,13 @@
 *.out
 *.o
 *.obj
+*.a
+*.so
+*.dylib
 
 # Visual Studio Code settings
 .vscode/
+*.code-workspace
 
 # CMake build folders
 build/
@@ -13,15 +17,27 @@ CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
+*.ninja
+compile_commands.json
 
 # Windows junk
 Thumbs.db
 desktop.ini
+~$*
 
-# Logs
+# Logs and temporary files
 *.log
+res.txt
 
+# Temporary Office files
+~$*.pptx
+~$*.docx
 
-# Ignore nested repos accidentally created
-practice/practice/
+# Practice and test directories
 practice/
+main/test.cpp
+
+# IDE and editor files
+.DS_Store
+*.swp
+*.swo

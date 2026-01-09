@@ -1,11 +1,24 @@
-g++ -o main.exe main.cpp ..\headers\BMP.h ..\headers\Normalizer.h ..\headers\jaccard.h ..\headers\pHash.h
-vector<string> files = {"..\inputImages\bubble_1.bmp",
-"..\inputImages\bubble_2.bmp",
-"..\inputImages\bubble_3.bmp",
-"..\inputImages\bubble_4.bmp",
-"..\inputImages\bubble_5.bmp",
-"..\inputImages\insertion_1.bmp",
-"..\inputImages\insertion_2.bmp",
-"..\inputImages\insertion_3.bmp",
-"..\inputImages\insertion_4.bmp",
-"..\inputImages\insertion_5.bmp"};
+Build and Run Instructions for ImCloneDetect
+=============================================
+
+1. Build the project (from the root directory):
+   mkdir build
+   cd build
+   cmake ..
+   cmake --build .
+
+2. Run the main application:
+   From the build directory:
+   ./main/main  (on Linux/Mac)
+   main\main.exe  (on Windows)
+   
+   Or from the root directory:
+   ./build/main/main  (on Linux/Mac)
+   ./build/main/main.exe  (on Windows)
+
+3. Run with test inputs:
+   ./build/main/main < commands.txt
+
+4. Run tests:
+   ./build/main/test  (on Linux/Mac)
+   main\test.exe  (on Windows)

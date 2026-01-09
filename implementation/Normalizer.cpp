@@ -1,5 +1,6 @@
 #include "../headers/BMP.h"
 #include "../headers/Normalizer.h"
+#include <math.h>
 #include <vector>
 #include <cmath>
 double gaussian(double x, double y, double sigma)

@@ -154,6 +154,6 @@ int main()
                             "../inputImages/insertion_3.bmp",
                             "../inputImages/insertion_4.bmp",
                             "../inputImages/insertion_5.bmp"};
-    jaccardCalculate(filesJaccard);
+    // jaccardCalculate(filesJaccard);
     pHashCalculator(files);
 }
