@@ -41,6 +41,7 @@ outputGray/
 blurredImages/
 backupImages/
 outputGrayBlur/
+outputGray/
 # IDE and editor files
 .DS_Store
 *.swp
