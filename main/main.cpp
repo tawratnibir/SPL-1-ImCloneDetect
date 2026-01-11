@@ -3,12 +3,18 @@
 #include "../headers/Normalizer.h"
 #include "../headers/pHash.h"
 
-#define title "file1, file2, similarity"
-#define grayDir "../outputGray/"
-#define csvDir "../outCSV"
-#define resizeDir "../resizedImage/"
-#define hashWidth 8
-#define hashHeight 8
+#define TITLE "file1, file2, similarity"
+#define INPUT_IMAGE_DIR "../inputImages"
+#define GRAY_DIR "../outputGray/"
+#define CSV_DIR "../outCSV/"
+#define RESIZE_DIR "../resizedImage/"
+#define JACCARD_CSV "jaccardSimsFinalPrep.csv"
+#define P_HASH_CSV "pHashSimsFinalPrep.csv"
+#define HASH_WIDTH 8
+#define HASH_HEIGHT 8
+#define P_HASH_HEIGHT 32
+#define P_HASH_WIDTH 32
+
 struct filePairSimilarity
 {
     string file1;
@@ -22,7 +28,7 @@ string fileNameTrimmer(string fileName, string type, string extension)
     string newFileName;
     for (int i = n - 1; i >= 0; i--)
     {
-        if (fileName[i] == '/')
+        if (fileName[i] == '/' || fileName[i] == '\\')
         {
             ptr = i;
             break;
@@ -39,13 +45,31 @@ string fileNameTrimmer(string fileName, string type, string extension)
         newFileName = newFileName + "." + extension;
     return newFileName;
 }
+void generateGrayImages(vector<string> fileNames) {
+    int n = fileNames.size();
+
+    for(int i=0;i<n;++i) {
+        BMP originalImage(fileNames[i].c_str());
+        string destination = GRAY_DIR + fileNameTrimmer(fileNames[i], "gray", "bmp");
+        toGrayScale(originalImage, destination.c_str());
+    }
+}
+void generateResizedImages(vector<string> fileNames, int outHeight, int outWidth) {
+    int n = fileNames.size();
+    for(int i=0;i<n;++i) {
+        string grayFileName = GRAY_DIR + fileNameTrimmer(fileNames[i], "gray", "bmp");
+        BMP originalImage(grayFileName.c_str());
+        string destination = RESIZE_DIR + fileNameTrimmer(fileNames[i], "resized", "bmp");
+        resizeBilinear(originalImage, outHeight, outWidth, destination.c_str());
+    }
+}  
 void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 {
     fstream fout;
 
-    fout.open(csvDir + csvFileName, std::ios::out);
-    cout << "Saving to: " << csvDir + csvFileName << endl;
-    fout << title << "\n";
+    fout.open(CSV_DIR + csvFileName, std::ios::out);
+    cout << "Saving to: " << CSV_DIR + csvFileName << endl;
+    fout << TITLE << "\n";
     for (auto x : filePairs)
     {
         fout << x.file1 << ", " << x.file2 << ", " << x.similarity << "\n";
@@ -67,8 +91,8 @@ void jaccardCalculate(vector<string> files)
             string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
             string grayStrOne = fileNameTrimmer(fileNameOne, "gray", "bmp");
             string grayStrTwo = fileNameTrimmer(fileNameTwo, "gray", "bmp");
-            grayStrOne = grayDir + grayStrOne;
-            grayStrTwo = grayDir + grayStrTwo;
+            grayStrOne = GRAY_DIR + grayStrOne;
+            grayStrTwo = GRAY_DIR + grayStrTwo;
 
             const char *grayPtrOne = grayStrOne.c_str();
             const char *grayPtrTwo = grayStrTwo.c_str();
@@ -93,7 +117,7 @@ void jaccardCalculate(vector<string> files)
             itr++;
         }
     }
-    writeToCsv("/jaccardSims.csv", filePairs);
+    writeToCsv(JACCARD_CSV, filePairs);
 }
 void pHashCalculator(vector<string> files)
 {
@@ -104,10 +128,10 @@ void pHashCalculator(vector<string> files)
     {
         for (int j = i + 1; j < n; j++)
         {
-            string fileNameOne = fileNameTrimmer(files[i], "", "bmp");
-            string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
-            string resOne = resizeDir + fileNameOne;
-            string resTwo = resizeDir + fileNameTwo;
+            string fileNameOne = fileNameTrimmer(files[i], "resized", "bmp");
+            string fileNameTwo = fileNameTrimmer(files[j], "resized", "bmp");
+            string resOne = RESIZE_DIR + fileNameOne;
+            string resTwo = RESIZE_DIR + fileNameTwo;
 
             const char *resPtrOne = resOne.c_str();
             const char *resPtrTwo = resTwo.c_str();
@@ -115,8 +139,8 @@ void pHashCalculator(vector<string> files)
             BMP resImgOne(resPtrOne);
             BMP resImgTwo(resPtrTwo);
 
-            string hashOne = generateHash(resImgOne, hashWidth, hashHeight);
-            string hashTwo = generateHash(resImgTwo, hashWidth, hashHeight);
+            string hashOne = generateHash(resImgOne, HASH_HEIGHT, HASH_WIDTH);
+            string hashTwo = generateHash(resImgTwo, HASH_HEIGHT, HASH_WIDTH);
 
             double similarityScore = pHash(hashOne, hashTwo);
 
@@ -129,31 +153,40 @@ void pHashCalculator(vector<string> files)
             itr++;
         }
     }
-    writeToCsv("/pHashSims.csv", filePairs);
+    writeToCsv(P_HASH_CSV, filePairs);
+}
+vector<string> getImagesFromDirectory(string path) {
+    vector<string> files;
+    string winPath = path;
+    for (auto& c : winPath) {
+        if (c == '/') c = '\\';
+    }
+    
+    system(("dir /b " + winPath + "\\*.bmp > temp_filelist.txt").c_str());
+    
+    ifstream infile("temp_filelist.txt");
+    string filename;
+    while (getline(infile, filename)) {
+        filename.erase(0, filename.find_first_not_of(" \r\n\t"));
+        filename.erase(filename.find_last_not_of(" \r\n\t") + 1);
+        
+        if (!filename.empty()) {
+            files.push_back(winPath + "\\" + filename);
+        }
+    }
+    infile.close();
+    system("del temp_filelist.txt");
+    return files;
 }
 int main()
 {
     freopen("res.txt", "w", stdout);
-    vector<string> files = {"../resizedImage/bitmask32_bubble_1_gray.bmp",
-                            "../resizedImage/bitmask32_bubble_2_gray.bmp",
-                            "../resizedImage/bitmask32_bubble_3_gray.bmp",
-                            "../resizedImage/bitmask32_bubble_4_gray.bmp",
-                            "../resizedImage/bitmask32_bubble_5_gray.bmp",
-                            "../resizedImage/bitmask32_insertion_1_gray.bmp",
-                            "../resizedImage/bitmask32_insertion_2_gray.bmp",
-                            "../resizedImage/bitmask32_insertion_3_gray.bmp",
-                            "../resizedImage/bitmask32_insertion_4_gray.bmp",
-                            "../resizedImage/bitmask32_insertion_5_gray.bmp"};
-    vector<string> filesJaccard = {"../inputImages/bubble_1.bmp",
-                            "../inputImages/bubble_2.bmp",
-                            "../inputImages/bubble_3.bmp",
-                            "../inputImages/bubble_4.bmp",
-                            "../inputImages/bubble_5.bmp",
-                            "../inputImages/insertion_1.bmp",
-                            "../inputImages/insertion_2.bmp",
-                            "../inputImages/insertion_3.bmp",
-                            "../inputImages/insertion_4.bmp",
-                            "../inputImages/insertion_5.bmp"};
-    // jaccardCalculate(filesJaccard);
+    vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
+    generateGrayImages(files);
+    generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
+    jaccardCalculate(files);
     pHashCalculator(files);
+    cerr << "Similarities generated successfully!\n";
+    // cout << fileNameTrimmer(files[0], "", "bmp");
+    // for(auto x:files) cout << x << endl;
 }

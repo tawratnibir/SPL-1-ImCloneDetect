@@ -36,7 +36,11 @@ res.txt
 # Practice and test directories
 practice/
 main/test.cpp
-
+resizedImage/
+outputGray/
+blurredImages/
+backupImages/
+outputGrayBlur/
 # IDE and editor files
 .DS_Store
 *.swp
