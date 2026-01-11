@@ -46,3 +46,6 @@ outputGray/
 .DS_Store
 *.swp
 *.swo
+
+#gitIgnore
+.gitIgnore
