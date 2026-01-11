@@ -48,4 +48,4 @@ outputGray/
 *.swo
 
 #gitIgnore
-.gitIgnore
+.gitignore
