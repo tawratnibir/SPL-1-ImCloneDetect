@@ -3,7 +3,7 @@
 #include "../headers/jaccard.h"
 #include <vector>
 #include <cmath>
-#define pi 3.1415926
+#define pi M_PI
 vector<vector<double>> dct(vector<vector<uint8_t>> sourceVector)
 {
     int n = sourceVector.size();

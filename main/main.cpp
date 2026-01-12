@@ -10,8 +10,8 @@
 #define BLUR_DIR "../blurredImages/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
-#define JACCARD_CSV "jaccardSimsFinalPresentation.csv"
-#define P_HASH_CSV "pHashSimsFinalPresentation.csv"
+#define JACCARD_CSV "jaccard.csv"
+#define P_HASH_CSV "pHash.csv"
 #define KERNEL_RADIUS 10
 #define SIGMA 1.0
 #define HASH_WIDTH 8
@@ -200,8 +200,8 @@ int main()
     vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
     // vector<string> grayFiles = getImagesFromDirectory(GRAY_DIR);
     // generateGsBllurImages(grayFiles);
-    // generateGrayImages(files);
-    // generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
+    generateGrayImages(files);
+    generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
     jaccardCalculate(files);
     pHashCalculator(files);
     cerr << "Similarities generated successfully!\n";

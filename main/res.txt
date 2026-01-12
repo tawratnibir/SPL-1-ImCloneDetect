@@ -43,7 +43,7 @@ i2.bmp i5.bmp 0.780196
 i3.bmp i4.bmp 0.114569
 i3.bmp i5.bmp 0.112276
 i4.bmp i5.bmp 0.87636
-Saving to: ../outCSV/jaccardSimsFinalPresentation.csv
+Saving to: ../outCSV/jaccard.csv
 b1_resized.bmp b2_resized.bmp 0.90625
 b1_resized.bmp b3_resized.bmp 0.890625
 b1_resized.bmp b4_resized.bmp 0.90625
@@ -89,4 +89,4 @@ i2_resized.bmp i5_resized.bmp 0.875
 i3_resized.bmp i4_resized.bmp 0.734375
 i3_resized.bmp i5_resized.bmp 0.75
 i4_resized.bmp i5_resized.bmp 0.890625
-Saving to: ../outCSV/pHashSimsFinalPresentation.csv
+Saving to: ../outCSV/pHash.csv
