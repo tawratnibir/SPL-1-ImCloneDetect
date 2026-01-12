@@ -30,7 +30,7 @@ BMP toNegative(BMP source, const char *destinationFileName);
 /// @return BMP object containing the grayscale image.
 BMP toGrayScale(BMP source, const char *destinationFileName);
 
-/// @brief Converts a BMP image to grayscale and applies Gaussian blur.
+/// @brief Converts a BMP image to Gaussian blurred image.
 /// @param source The source BMP image.
 /// @param kernelRadius Radius of the Gaussian kernel in pixels.
 /// @param sigma Standard deviation for the Gaussian blur.
