@@ -10,8 +10,8 @@
 #define BLUR_DIR "../blurredImages/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
-#define JACCARD_CSV "jaccardSimsFinalPrep.csv"
-#define P_HASH_CSV "pHashSimsFinalPrep.csv"
+#define JACCARD_CSV "jaccardSimsFinalPresentation.csv"
+#define P_HASH_CSV "pHashSimsFinalPresentation.csv"
 #define KERNEL_RADIUS 10
 #define SIGMA 1.0
 #define HASH_WIDTH 8
@@ -105,6 +105,8 @@ void jaccardCalculate(vector<string> files)
             string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
             string grayStrOne = fileNameTrimmer(fileNameOne, "gray", "bmp");
             string grayStrTwo = fileNameTrimmer(fileNameTwo, "gray", "bmp");
+            string g1 = grayStrOne;
+            string g2 = grayStrTwo;
             grayStrOne = GRAY_DIR + grayStrOne;
             grayStrTwo = GRAY_DIR + grayStrTwo;
 
@@ -122,8 +124,8 @@ void jaccardCalculate(vector<string> files)
 
             double similarityScore = jaccardDistance(grayImageOne, grayImageTwo);
 
-            filePairs[itr].file1 = fileNameOne;
-            filePairs[itr].file2 = fileNameTwo;
+            filePairs[itr].file1 = g1;
+            filePairs[itr].file2 = g2;
             filePairs[itr].similarity = similarityScore;
 
             cout << fileNameOne << " " << fileNameTwo << " " << similarityScore << endl;
@@ -195,14 +197,14 @@ vector<string> getImagesFromDirectory(string path) {
 int main()
 {
     freopen("res.txt", "w", stdout);
-    // vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
-    vector<string> grayFiles = getImagesFromDirectory(GRAY_DIR);
-    generateGsBllurImages(grayFiles);
+    vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
+    // vector<string> grayFiles = getImagesFromDirectory(GRAY_DIR);
+    // generateGsBllurImages(grayFiles);
     // generateGrayImages(files);
     // generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
-    // jaccardCalculate(files);
-    // pHashCalculator(files);
-    cerr << "Blur Images generated successfully!\n";
+    jaccardCalculate(files);
+    pHashCalculator(files);
+    cerr << "Similarities generated successfully!\n";
     // cout << fileNameTrimmer(files[0], "", "bmp");
     // for(auto x:files) cout << x << endl;
 }
