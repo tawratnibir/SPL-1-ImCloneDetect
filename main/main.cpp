@@ -6,10 +6,14 @@
 #define TITLE "file1, file2, similarity"
 #define INPUT_IMAGE_DIR "../inputImages"
 #define GRAY_DIR "../outputGray/"
+#define GRAY_BLUR_DIR "../outputGrayBlur/"
+#define BLUR_DIR "../blurredImages/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
 #define JACCARD_CSV "jaccardSimsFinalPrep.csv"
 #define P_HASH_CSV "pHashSimsFinalPrep.csv"
+#define KERNEL_RADIUS 10
+#define SIGMA 1.0
 #define HASH_WIDTH 8
 #define HASH_HEIGHT 8
 #define P_HASH_HEIGHT 32
@@ -61,6 +65,16 @@ void generateResizedImages(vector<string> fileNames, int outHeight, int outWidth
         BMP originalImage(grayFileName.c_str());
         string destination = RESIZE_DIR + fileNameTrimmer(fileNames[i], "resized", "bmp");
         resizeBilinear(originalImage, outHeight, outWidth, destination.c_str());
+    }
+}
+void generateGsBllurImages(vector<string> fileNames) {
+    int n = fileNames.size();
+
+    for(int i=0;i<n;++i) {
+        BMP originalImage(fileNames[i].c_str());
+        string destination = BLUR_DIR + fileNameTrimmer(fileNames[i], "blur", "bmp");
+        toGsBlur(originalImage, KERNEL_RADIUS, SIGMA, destination.c_str());
+        // toGrayScale(originalImage, destination.c_str());
     }
 }  
 void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
@@ -181,12 +195,14 @@ vector<string> getImagesFromDirectory(string path) {
 int main()
 {
     freopen("res.txt", "w", stdout);
-    vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
-    generateGrayImages(files);
-    generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
-    jaccardCalculate(files);
-    pHashCalculator(files);
-    cerr << "Similarities generated successfully!\n";
+    // vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
+    vector<string> grayFiles = getImagesFromDirectory(GRAY_DIR);
+    generateGsBllurImages(grayFiles);
+    // generateGrayImages(files);
+    // generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
+    // jaccardCalculate(files);
+    // pHashCalculator(files);
+    cerr << "Blur Images generated successfully!\n";
     // cout << fileNameTrimmer(files[0], "", "bmp");
     // for(auto x:files) cout << x << endl;
 }
