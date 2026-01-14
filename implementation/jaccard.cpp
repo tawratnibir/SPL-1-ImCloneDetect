@@ -62,5 +62,6 @@ double jaccardDistance(BMP &image1, BMP &image2)
                 diff++;
         }
     }
+    if(diff == 0 && sum == 0) return 1;
     return 1 - (diff / sum);
 }
