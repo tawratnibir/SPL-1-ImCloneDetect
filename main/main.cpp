@@ -105,6 +105,19 @@ void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 void singlePairSimGen(string file1, string file2)
 {
     try {
+        // Validate file extensions
+        if (file1.length() < 4 || file1.substr(file1.length() - 4) != ".bmp" || 
+            file2.length() < 4 || file2.substr(file2.length() - 4) != ".bmp") {
+            throw runtime_error("Files must be in .bmp format");
+        }
+        
+        // Check if files exist
+        ifstream check1(file1);
+        ifstream check2(file2);
+        if (!check1.good() || !check2.good()) {
+            throw runtime_error("One or both files not found");
+        }
+        
         cout << "Generating grayscale images..." << endl;
 
         BMP img1(file1.c_str());
