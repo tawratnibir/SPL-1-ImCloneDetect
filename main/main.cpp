@@ -2,6 +2,10 @@
 #include "../headers/jaccard.h"
 #include "../headers/Normalizer.h"
 #include "../headers/pHash.h"
+#include <fstream>
+#include <iostream>
+#include <stdexcept>
+using namespace std;
 
 #define TITLE "file1, file2, similarity"
 #define INPUT_IMAGE_DIR "../inputImages"
@@ -10,15 +14,15 @@
 #define BLUR_DIR "../blurredImages/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
-#define JACCARD_CSV "jaccard.csv"
-#define P_HASH_CSV "pHash.csv"
+#define JACCARD_CSV "jaccard2.csv"
+#define P_HASH_CSV "pHash2.csv"
 #define KERNEL_RADIUS 10
 #define SIGMA 1.0
 #define HASH_WIDTH 8
 #define HASH_HEIGHT 8
 #define P_HASH_HEIGHT 32
 #define P_HASH_WIDTH 32
-
+#define SINGLE_PAIR_CSV "singlePairSimilarity.csv"
 struct filePairSimilarity
 {
     string file1;
@@ -38,7 +42,8 @@ string fileNameTrimmer(string fileName, string type, string extension)
             break;
         }
     }
-    if(ptr == 0) ptr = -1;
+    if (ptr == 0)
+        ptr = -1;
     for (int i = ptr + 1; i < n - 4; i++)
     {
         newFileName.push_back(fileName[i]);
@@ -49,34 +54,40 @@ string fileNameTrimmer(string fileName, string type, string extension)
         newFileName = newFileName + "." + extension;
     return newFileName;
 }
-void generateGrayImages(vector<string> fileNames) {
+void generateGrayImages(vector<string> fileNames)
+{
     int n = fileNames.size();
 
-    for(int i=0;i<n;++i) {
+    for (int i = 0; i < n; ++i)
+    {
         BMP originalImage(fileNames[i].c_str());
         string destination = GRAY_DIR + fileNameTrimmer(fileNames[i], "gray", "bmp");
         toGrayScale(originalImage, destination.c_str());
     }
 }
-void generateResizedImages(vector<string> fileNames, int outHeight, int outWidth) {
+void generateResizedImages(vector<string> fileNames, int outHeight, int outWidth)
+{
     int n = fileNames.size();
-    for(int i=0;i<n;++i) {
+    for (int i = 0; i < n; ++i)
+    {
         string grayFileName = GRAY_DIR + fileNameTrimmer(fileNames[i], "gray", "bmp");
         BMP originalImage(grayFileName.c_str());
         string destination = RESIZE_DIR + fileNameTrimmer(fileNames[i], "resized", "bmp");
         resizeBilinear(originalImage, outHeight, outWidth, destination.c_str());
     }
 }
-void generateGsBllurImages(vector<string> fileNames) {
+void generateGsBllurImages(vector<string> fileNames)
+{
     int n = fileNames.size();
 
-    for(int i=0;i<n;++i) {
+    for (int i = 0; i < n; ++i)
+    {
         BMP originalImage(fileNames[i].c_str());
         string destination = BLUR_DIR + fileNameTrimmer(fileNames[i], "blur", "bmp");
         toGsBlur(originalImage, KERNEL_RADIUS, SIGMA, destination.c_str());
         // toGrayScale(originalImage, destination.c_str());
     }
-}  
+}
 void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 {
     fstream fout;
@@ -91,7 +102,66 @@ void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 
     fout.close();
 }
+void singlePairSimGen(string file1, string file2)
+{
+    try {
+        cout << "Generating grayscale images..." << endl;
 
+        BMP img1(file1.c_str());
+        BMP img2(file2.c_str());
+        
+        string baseName1 = fileNameTrimmer(file1, "", "bmp");
+        string baseName2 = fileNameTrimmer(file2, "", "bmp");
+        
+        string grayName1 = fileNameTrimmer(file1, "gray", "bmp");
+        string grayName2 = fileNameTrimmer(file2, "gray", "bmp");
+        string grayDest1 = GRAY_DIR + grayName1;
+        string grayDest2 = GRAY_DIR + grayName2;
+        
+        
+        toGrayScale(img1, grayDest1.c_str());
+        toGrayScale(img2, grayDest2.c_str());
+        
+        BMP grayImageOne(grayDest1.c_str());
+        BMP grayImageTwo(grayDest2.c_str());
+        
+        double similarityScore = jaccardDistance(grayImageOne, grayImageTwo);
+        cout << "\nJaccard Similarity: " << similarityScore << endl;
+        
+        cout << "Generating resized images..." << endl;
+        string resizeName1 = fileNameTrimmer(file1, "resized", "bmp");
+        string resizeName2 = fileNameTrimmer(file2, "resized", "bmp");
+        string resizeDest1 = RESIZE_DIR + resizeName1;
+        string resizeDest2 = RESIZE_DIR + resizeName2;
+        
+        resizeBilinear(grayImageOne, P_HASH_HEIGHT, P_HASH_WIDTH, resizeDest1.c_str());
+        resizeBilinear(grayImageTwo, P_HASH_HEIGHT, P_HASH_WIDTH, resizeDest2.c_str());
+        
+        BMP resImgOne(resizeDest1.c_str());
+        BMP resImgTwo(resizeDest2.c_str());
+        
+        string hashOne = generateHash(resImgOne, HASH_HEIGHT, HASH_WIDTH);
+        string hashTwo = generateHash(resImgTwo, HASH_HEIGHT, HASH_WIDTH);
+        
+        similarityScore = pHash(hashOne, hashTwo);
+        cout << "pHash Similarity: " << similarityScore << endl;
+        
+        vector<filePairSimilarity> fileSim(2);
+        fileSim[0].file1 = grayName1;
+        fileSim[0].file2 = grayName2;
+        fileSim[0].similarity = jaccardDistance(grayImageOne, grayImageTwo);
+        
+        fileSim[1].file1 = resizeName1;
+        fileSim[1].file2 = resizeName2;
+        fileSim[1].similarity = pHash(hashOne, hashTwo);
+        
+        writeToCsv(SINGLE_PAIR_CSV, fileSim);
+        cout << "\nComparison complete! Results saved to: " << CSV_DIR << SINGLE_PAIR_CSV << endl;
+        
+    } catch (const exception& e) {
+        cout << "\nError: " << e.what() << endl;
+    }
+}
 void jaccardCalculate(vector<string> files)
 {
     int n = files.size();
@@ -112,12 +182,6 @@ void jaccardCalculate(vector<string> files)
 
             const char *grayPtrOne = grayStrOne.c_str();
             const char *grayPtrTwo = grayStrTwo.c_str();
-
-            BMP imageOne(files[i].c_str());
-            BMP imageTwo(files[j].c_str());
-
-            toGrayScale(imageOne, grayPtrOne);
-            toGrayScale(imageTwo, grayPtrTwo);
 
             BMP grayImageOne(grayPtrOne);
             BMP grayImageTwo(grayPtrTwo);
@@ -171,22 +235,27 @@ void pHashCalculator(vector<string> files)
     }
     writeToCsv(P_HASH_CSV, filePairs);
 }
-vector<string> getImagesFromDirectory(string path) {
+vector<string> getImagesFromDirectory(string path)
+{
     vector<string> files;
     string winPath = path;
-    for (auto& c : winPath) {
-        if (c == '/') c = '\\';
+    for (auto &c : winPath)
+    {
+        if (c == '/')
+            c = '\\';
     }
-    
+
     system(("dir /b " + winPath + "\\*.bmp > temp_filelist.txt").c_str());
-    
+
     ifstream infile("temp_filelist.txt");
     string filename;
-    while (getline(infile, filename)) {
+    while (getline(infile, filename))
+    {
         filename.erase(0, filename.find_first_not_of(" \r\n\t"));
         filename.erase(filename.find_last_not_of(" \r\n\t") + 1);
-        
-        if (!filename.empty()) {
+
+        if (!filename.empty())
+        {
             files.push_back(winPath + "\\" + filename);
         }
     }
@@ -196,15 +265,64 @@ vector<string> getImagesFromDirectory(string path) {
 }
 int main()
 {
-    freopen("res.txt", "w", stdout);
-    vector<string> files = getImagesFromDirectory(INPUT_IMAGE_DIR);
-    // vector<string> grayFiles = getImagesFromDirectory(GRAY_DIR);
-    // generateGsBllurImages(grayFiles);
-    generateGrayImages(files);
-    generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
-    jaccardCalculate(files);
-    pHashCalculator(files);
-    cerr << "Similarities generated successfully!\n";
-    // cout << fileNameTrimmer(files[0], "", "bmp");
-    // for(auto x:files) cout << x << endl;
+    int choice = 0;
+    string directoryInput;
+    vector<string> files;
+    string singleFile1, singleFile2;
+    do
+    {
+        cout << "\n=== Welcome to ImCloneDetect tool ===" << endl;
+        cout << "Press 1: Find pairwise similarity on a folder" << endl;
+        cout << "Press 2: Find similarity of two images" << endl;
+        cout << "Press 3: Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();
+        switch (choice)
+        {
+        case 1:
+            cout << "\n--- Pairwise Similarity ---" << endl;
+            cout << "Enter the directory name (relative to ImCloneDetect/): ";
+            getline(cin, directoryInput);
+            directoryInput = "../" + directoryInput;
+            files = getImagesFromDirectory(directoryInput);
+            if (files.size() == 0)
+            {
+                cout << "No images found in the directory." << endl;
+                break;
+            }
+            cout << "Processing " << files.size() << " images..." << endl;
+            generateGrayImages(files);
+            generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
+            jaccardCalculate(files);
+            pHashCalculator(files);
+            cout << "\nPairwise similarities generated successfully!" << endl;
+            cout << "Results saved to: " << CSV_DIR << endl;
+            cout << "  - Jaccard: " << JACCARD_CSV << endl;
+            cout << "  - pHash: " << P_HASH_CSV << endl;
+            break;
+        case 2:
+            cout << "\n--- Compare Two Images ---" << endl;
+            cout << "Files must be in ImCloneDetect/inputImages" << endl;
+            cout << "Enter the first file name: ";
+            getline(cin, singleFile1);
+            cout << "Enter the second file name: ";
+            getline(cin, singleFile2);
+            directoryInput = INPUT_IMAGE_DIR;
+            singleFile1 = directoryInput + '/' + singleFile1;
+            singleFile2 = directoryInput + '/' + singleFile2;
+            cout << "\nComparing:" << endl;
+            cout << "  File 1: " << singleFile1 << endl;
+            cout << "  File 2: " << singleFile2 << endl;
+            singlePairSimGen(singleFile1, singleFile2);
+            break;
+        case 3:
+            cout << "\nThank you for using ImCloneDetect!" << endl;
+            cout << "Exiting..." << endl;
+            break;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+    } while (choice != 3);
 }

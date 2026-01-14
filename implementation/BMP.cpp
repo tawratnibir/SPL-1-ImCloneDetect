@@ -23,7 +23,7 @@ void BMP::read(const char *fName)
         }
         else
         {
-            cerr << "File read successfully\n";
+            // cout << "File read successfully\n";
         }
         inp.read((char *)&bmpInfoHeader, sizeof(bmpInfoHeader));
 
@@ -89,7 +89,7 @@ void BMP::read(const char *fName)
     }
 }
 
-BMP::BMP(int32_t width, int32_t height, bool hasAlpha = true)
+BMP::BMP(int32_t width, int32_t height, bool hasAlpha)
 {
     if (width <= 0 || height <= 0)
     {
