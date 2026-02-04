@@ -106,8 +106,7 @@ void singlePairSimGen(string file1, string file2)
 {
     try {
         // Validate file extensions
-        if (file1.length() < 4 || file1.substr(file1.length() - 4) != ".bmp" || 
-            file2.length() < 4 || file2.substr(file2.length() - 4) != ".bmp") {
+        if (file1.find(".bmp") == string::npos || file2.find(".bmp") == string::npos) {
             throw runtime_error("Files must be in .bmp format");
         }
         
@@ -118,7 +117,7 @@ void singlePairSimGen(string file1, string file2)
             throw runtime_error("One or both files not found");
         }
         
-        cout << "Generating grayscale images..." << endl;
+        // cout << "Generating grayscale images..." << endl;
 
         BMP img1(file1.c_str());
         BMP img2(file2.c_str());
@@ -141,7 +140,7 @@ void singlePairSimGen(string file1, string file2)
         double similarityScore = jaccardDistance(grayImageOne, grayImageTwo);
         cout << "\nJaccard Similarity: " << similarityScore << endl;
         
-        cout << "Generating resized images..." << endl;
+        // cout << "Generating resized images..." << endl;
         string resizeName1 = fileNameTrimmer(file1, "resized", "bmp");
         string resizeName2 = fileNameTrimmer(file2, "resized", "bmp");
         string resizeDest1 = RESIZE_DIR + resizeName1;

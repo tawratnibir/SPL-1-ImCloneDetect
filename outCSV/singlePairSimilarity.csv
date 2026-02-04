@@ -1,3 +1,3 @@
 file1, file2, similarity
-b1_gray.bmp, i4_gray.bmp, 0.106013
-b1_resized.bmp, i4_resized.bmp, 0.71875
+i2_gray.bmp, i5_gray.bmp, 0.780196
+i2_resized.bmp, i5_resized.bmp, 0.875
