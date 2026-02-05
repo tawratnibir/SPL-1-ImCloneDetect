@@ -21,7 +21,8 @@ vector<vector<double>> dct(vector<vector<uint8_t>> sourceVector);
 std::string generateHash(BMP source, int k, int l);
 
 /// @brief Calculates the perceptual hash similarity between two hash strings.
+/// Computes similarity as: 1 - (Hamming distance / hash length).
 /// @param s1 First perceptual hash string.
 /// @param s2 Second perceptual hash string.
-/// @return Similarity score indicating how similar the images are.
+/// @return Similarity value between 0.0 (completely different) and 1.0 (identical).
 double pHash(string s1, string s2);

@@ -70,8 +70,8 @@ struct BMP
     /// @param fName Path where the BMP file will be written.
     void write(const char *fName);
 
-    /// @brief Calculates the total size of the image in bytes.
-    /// @return Image size in bytes.
+    /// @brief Calculates the total size of the image file in kilobytes.
+    /// @return Image file size in kilobytes (KB).
     double imageSize();
     
     /// @brief Retrieves the image type/format identifier.

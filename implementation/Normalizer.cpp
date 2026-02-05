@@ -3,6 +3,10 @@
 #include <math.h>
 #include <vector>
 #include <cmath>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 double gaussian(double x, double y, double sigma)
 {
     return (1.0 / (2.0 * M_PI * sigma * sigma)) * std::exp(-(x * x + y * y) / (2.0 * sigma * sigma));
