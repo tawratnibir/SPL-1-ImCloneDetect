@@ -37,12 +37,16 @@ vector<double> emdSignatureGenerator(vector<vector<uint8_t>> pixels, int divider
     return signature;
 }
 double computeEmd(BMP image1, BMP image2) {
-    image1 = resizeBilinear(image1, 300, 300, "emd2_1.bmp");
-    image2 = resizeBilinear(image2, 300, 300, "emd2_2.bmp");
-    image1 = toGrayScale(image1, "emd2_1_gray.bmp");
-    image2 = toGrayScale(image2, "emd2_2_gray.bmp");
-    image1 = toGsBlur(image1, 3, 1, "emd2_1_gsblur.bmp");
-    image2 = toGsBlur(image2, 3, 1, "emd2_2_gsblur.bmp");
+    // Use temp directory for intermediate files
+    string tmpDir = "../build/tmp_emd/";
+    system(("if not exist \"" + tmpDir + "\" mkdir \"" + tmpDir + "\"").c_str());
+
+    image1 = resizeBilinear(image1, 300, 300, (tmpDir + "r1.bmp").c_str());
+    image2 = resizeBilinear(image2, 300, 300, (tmpDir + "r2.bmp").c_str());
+    image1 = toGrayScale(image1, (tmpDir + "g1.bmp").c_str());
+    image2 = toGrayScale(image2, (tmpDir + "g2.bmp").c_str());
+    image1 = toGsBlur(image1, 3, 1, (tmpDir + "b1.bmp").c_str());
+    image2 = toGsBlur(image2, 3, 1, (tmpDir + "b2.bmp").c_str());
     vector<vector<uint8_t>> pixels1, pixels2;
     pixels1 = pixelVectorGenerator(image1, 300, 300);
     pixels2 = pixelVectorGenerator(image2, 300, 300);

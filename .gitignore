@@ -16,9 +16,11 @@ build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
 *.ninja
 compile_commands.json
+
+# OR-Tools (downloaded by setup.bat)
+optimizationLibs/
 
 # Windows junk
 Thumbs.db

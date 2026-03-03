@@ -13,8 +13,6 @@ using namespace std;
 #define TITLE "file1, file2, similarity"
 #define INPUT_IMAGE_DIR "../inputImages"
 #define GRAY_DIR "../outputGray/"
-#define GRAY_BLUR_DIR "../outputGrayBlur/"
-#define BLUR_DIR "../blurredImages/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
 #define JACCARD_CSV "jaccard2.csv"
@@ -95,18 +93,6 @@ void generateResizedImages(vector<string> fileNames, int outHeight, int outWidth
         BMP originalImage(grayFileName.c_str());
         string destination = RESIZE_DIR + fileNameTrimmer(fileNames[i], "resized", "bmp");
         resizeBilinear(originalImage, outHeight, outWidth, destination.c_str());
-    }
-}
-void generateGsBllurImages(vector<string> fileNames)
-{
-    int n = fileNames.size();
-
-    for (int i = 0; i < n; ++i)
-    {
-        BMP originalImage(fileNames[i].c_str());
-        string destination = BLUR_DIR + fileNameTrimmer(fileNames[i], "blur", "bmp");
-        toGsBlur(originalImage, KERNEL_RADIUS, SIGMA, destination.c_str());
-        // toGrayScale(originalImage, destination.c_str());
     }
 }
 void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
@@ -214,7 +200,7 @@ void singlePairSimGen(string file1, string file2)
         cout << "\nError: " << e.what() << endl;
     }
 }
-void jaccardCalculate(vector<string> files)
+vector<filePairSimilarity> jaccardCalculate(vector<string> files)
 {
     int n = files.size();
     int totalPairs = n * (n - 1) / 2;
@@ -250,8 +236,9 @@ void jaccardCalculate(vector<string> files)
         }
     }
     writeToCsv(JACCARD_CSV, filePairs);
+    return filePairs;
 }
-void pHashCalculator(vector<string> files)
+vector<filePairSimilarity> pHashCalculator(vector<string> files)
 {
     int n = files.size();
     int totalPairs = n * (n - 1) / 2;
@@ -286,8 +273,9 @@ void pHashCalculator(vector<string> files)
         }
     }
     writeToCsv(P_HASH_CSV, filePairs);
+    return filePairs;
 }
-void emdCalculator(vector<string> files)
+vector<filePairSimilarity> emdCalculator(vector<string> files)
 {
     int n = files.size();
     int totalPairs = n * (n - 1) / 2;
@@ -314,53 +302,7 @@ void emdCalculator(vector<string> files)
         }
     }
     writeToCsv(EMD_CSV, filePairs);
-}
-void overallScoreCalculator(vector<string> files)
-{
-    int n = files.size();
-    int totalPairs = n * (n - 1) / 2;
-    vector<filePairSimilarity> filePairs(totalPairs);
-    int itr = 0;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = i + 1; j < n; j++)
-        {
-            string fileNameOne = fileNameTrimmer(files[i], "", "bmp");
-            string fileNameTwo = fileNameTrimmer(files[j], "", "bmp");
-
-            // Jaccard
-            string grayStrOne = GRAY_DIR + fileNameTrimmer(fileNameOne, "gray", "bmp");
-            string grayStrTwo = GRAY_DIR + fileNameTrimmer(fileNameTwo, "gray", "bmp");
-            BMP grayImageOne(grayStrOne.c_str());
-            BMP grayImageTwo(grayStrTwo.c_str());
-            double jaccardScore = jaccardDistance(grayImageOne, grayImageTwo);
-
-            // pHash
-            string resOne = RESIZE_DIR + fileNameTrimmer(files[i], "resized", "bmp");
-            string resTwo = RESIZE_DIR + fileNameTrimmer(files[j], "resized", "bmp");
-            BMP resImgOne(resOne.c_str());
-            BMP resImgTwo(resTwo.c_str());
-            string hashOne = generateHash(resImgOne, HASH_HEIGHT, HASH_WIDTH);
-            string hashTwo = generateHash(resImgTwo, HASH_HEIGHT, HASH_WIDTH);
-            double pHashScore = pHash(hashOne, hashTwo);
-
-            // EMD
-            BMP img1(files[i].c_str());
-            BMP img2(files[j].c_str());
-            double emdScore = computeEmd(img1, img2);
-
-            // Overall: 20% Jaccard + 40% pHash + 40% EMD
-            double overall = 0.20 * jaccardScore + 0.40 * pHashScore + 0.40 * emdScore;
-
-            filePairs[itr].file1 = fileNameOne;
-            filePairs[itr].file2 = fileNameTwo;
-            filePairs[itr].similarity = overall;
-
-            itr++;
-            printProgressBar("Overall", itr, totalPairs);
-        }
-    }
-    writeToCsv(OVERALL_CSV, filePairs);
+    return filePairs;
 }
 string stripExtension(const string &name)
 {
@@ -424,6 +366,27 @@ void generateGraphJson(vector<filePairSimilarity> &pairs)
     fout.close();
     cout << "Graph GEXF saved to: " << outPath << endl;
 }
+void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
+                           vector<filePairSimilarity> &pHashPairs,
+                           vector<filePairSimilarity> &emdPairs)
+{
+    int totalPairs = jaccardPairs.size();
+    vector<filePairSimilarity> filePairs(totalPairs);
+    for (int i = 0; i < totalPairs; i++)
+    {
+        double overall = 0.20 * jaccardPairs[i].similarity
+                       + 0.40 * pHashPairs[i].similarity
+                       + 0.40 * emdPairs[i].similarity;
+
+        filePairs[i].file1 = emdPairs[i].file1;
+        filePairs[i].file2 = emdPairs[i].file2;
+        filePairs[i].similarity = overall;
+
+        printProgressBar("Overall", i + 1, totalPairs);
+    }
+    writeToCsv(OVERALL_CSV, filePairs);
+    generateGraphJson(filePairs);
+}
 vector<string> getImagesFromDirectory(string path)
 {
     vector<string> files;
@@ -483,36 +446,11 @@ int main()
             cout << "Processing " << files.size() << " images..." << endl;
             generateGrayImages(files);
             generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
-            jaccardCalculate(files);
-            pHashCalculator(files);
-            emdCalculator(files);
-            overallScoreCalculator(files);
-            // Read back overall CSV and generate graph JSON
             {
-                ifstream csvIn(string(CSV_DIR) + OVERALL_CSV);
-                string line;
-                getline(csvIn, line); // skip header
-                vector<filePairSimilarity> overallPairs;
-                while (getline(csvIn, line))
-                {
-                    stringstream ss(line);
-                    string f1, f2, simStr;
-                    getline(ss, f1, ',');
-                    getline(ss, f2, ',');
-                    getline(ss, simStr, ',');
-                    f1.erase(0, f1.find_first_not_of(" "));
-                    f1.erase(f1.find_last_not_of(" ") + 1);
-                    f2.erase(0, f2.find_first_not_of(" "));
-                    f2.erase(f2.find_last_not_of(" ") + 1);
-                    simStr.erase(0, simStr.find_first_not_of(" "));
-                    filePairSimilarity fps;
-                    fps.file1 = f1;
-                    fps.file2 = f2;
-                    fps.similarity = stod(simStr);
-                    overallPairs.push_back(fps);
-                }
-                csvIn.close();
-                generateGraphJson(overallPairs);
+                auto jaccardPairs = jaccardCalculate(files);
+                auto pHashPairs = pHashCalculator(files);
+                auto emdPairs = emdCalculator(files);
+                overallScoreCalculator(jaccardPairs, pHashPairs, emdPairs);
             }
             cout << "\nPairwise similarities generated successfully!" << endl;
             cout << "Results saved to: " << CSV_DIR << endl;
