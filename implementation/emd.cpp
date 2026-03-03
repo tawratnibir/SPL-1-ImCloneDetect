@@ -16,7 +16,7 @@ double computeEuclid(int x1, int y1, int x2, int y2)
 vector<double> emdSignatureGenerator(vector<vector<uint8_t>> pixels, int divider)
 {
     int n = pixels.size();
-    vector<double> signature;  // No initial size, using push_back
+    vector<double> signature;
     int itr1 = pixels.size() / divider;
     int itr2 = pixels[0].size() / divider;
     for (int i = 0; i < divider; ++i)
@@ -107,9 +107,21 @@ double computeEmd(BMP image1, BMP image2) {
 
     if(status == SimpleMinCostFlow::OPTIMAL) {
         double emd = static_cast<double>(min_cost_flow.OptimalCost()) / 1000000000.0;
-        double max_distance = sqrt(pow(5 * 50, 2) + pow(5 * 50, 2));
-        double emd_max = max_distance;
-        double similarity = 1.0 - emd / emd_max;
+
+        // Compute emd_max as mean pairwise centroid distance.
+        // The paper's EMDmax = "distance between pure black and pure white images".
+        // Using the theoretical max geometric distance (sqrt(250^2+250^2) = 353.55)
+        // is far too large — real normalized distributions never produce EMD anywhere
+        // near that value, compressing all scores into 0.93-1.0.
+        // The mean pairwise distance (~154) is a realistic upper bound representing
+        // the expected transport cost for genuinely different spatial distributions.
+        double emd_max = 0;
+        for(int i = 0; i < 36; ++i)
+            for(int j = 0; j < 36; ++j)
+                emd_max += distanceMat[i][j];
+        emd_max /= (36 * 36);
+
+        double similarity = max(0.0, 1.0 - emd / emd_max);
 
         return similarity;
     } else{

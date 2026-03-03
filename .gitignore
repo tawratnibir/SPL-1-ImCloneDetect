@@ -41,6 +41,9 @@ outputGray/
 blurredImages/
 backupImages/
 outputGrayBlur/
+randomImages/
+graphJson/
+
 # IDE and editor files
 .DS_Store
 *.swp
