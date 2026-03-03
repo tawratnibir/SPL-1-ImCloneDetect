@@ -6,7 +6,7 @@
 *.a
 *.so
 *.dylib
-
+*.dll
 # Visual Studio Code settings
 .vscode/
 *.code-workspace
