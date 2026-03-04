@@ -18,6 +18,9 @@ using namespace std;
 #define JACCARD_CSV "jaccard.csv"
 #define P_HASH_CSV "pHash.csv"
 #define EMD_CSV "emd.csv"
+#define JACCARD_WEIGHT 0.20
+#define PHASH_WEIGHT 0.40
+#define EMD_WEIGHT 0.40
 #define OVERALL_CSV "overall.csv"
 #define GRAPH_JSON_DIR "../graphFiles/"
 #define GRAPH_JSON_FILE "overall_graph.gexf"
@@ -173,7 +176,7 @@ void singlePairSimGen(string file1, string file2)
         
         double jaccardScore = jaccardDistance(grayImageOne, grayImageTwo);
         double pHashScore = pHash(hashOne, hashTwo);
-        double overall = 0.20 * jaccardScore + 0.40 * pHashScore + 0.40 * emdScore;
+        double overall = JACCARD_WEIGHT * jaccardScore + PHASH_WEIGHT * pHashScore + EMD_WEIGHT * emdScore;
         cout << "Overall Similarity: " << overall << endl;
         
         vector<filePairSimilarity> fileSim(4);
@@ -374,9 +377,9 @@ void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
     vector<filePairSimilarity> filePairs(totalPairs);
     for (int i = 0; i < totalPairs; i++)
     {
-        double overall = 0.20 * jaccardPairs[i].similarity
-                       + 0.40 * pHashPairs[i].similarity
-                       + 0.40 * emdPairs[i].similarity;
+        double overall = JACCARD_WEIGHT * jaccardPairs[i].similarity
+                       + PHASH_WEIGHT * pHashPairs[i].similarity
+                       + EMD_WEIGHT * emdPairs[i].similarity;
 
         filePairs[i].file1 = emdPairs[i].file1;
         filePairs[i].file2 = emdPairs[i].file2;
