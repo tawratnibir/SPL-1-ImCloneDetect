@@ -1,1 +1,0 @@
-g++ -o .\main.exe main.cpp ..\implementation\BMP.cpp ..\implementation\Normalizer.cpp ..\implementation\jaccard.cpp ..\implementation\pHash.cpp ; .\main.exe
