@@ -15,11 +15,11 @@ using namespace std;
 #define GRAY_DIR "../outputGray/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
-#define JACCARD_CSV "jaccard2.csv"
-#define P_HASH_CSV "pHash2.csv"
-#define EMD_CSV "emd2.csv"
-#define OVERALL_CSV "overall2.csv"
-#define GRAPH_JSON_DIR "../graphJson/"
+#define JACCARD_CSV "jaccard.csv"
+#define P_HASH_CSV "pHash.csv"
+#define EMD_CSV "emd.csv"
+#define OVERALL_CSV "overall.csv"
+#define GRAPH_JSON_DIR "../graphFiles/"
 #define GRAPH_JSON_FILE "overall_graph.gexf"
 #define KERNEL_RADIUS 10
 #define SIGMA 1.0
