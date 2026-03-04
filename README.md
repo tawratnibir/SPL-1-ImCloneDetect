@@ -28,7 +28,7 @@ Image clone detection tool that compares BMP images using three similarity metri
 3. **Build the project:**
    Open a **Developer Command Prompt for VS 2022** (or run `vcvars64.bat`), then:
    ```
-   build.bat main
+   .\build.bat main
    ```
 
 4. **Run:**
@@ -68,5 +68,5 @@ ImCloneDetect/
 ├── implementation/    # Implementation files
 ├── inputImages/       # Place your BMP images here
 ├── outCSV/            # CSV output directory
-└── graphJson/         # GEXF graph output directory
+└── graphFiles/         # GEXF graph output directory
 ```
