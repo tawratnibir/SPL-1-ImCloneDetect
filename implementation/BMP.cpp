@@ -37,8 +37,15 @@ void BMP::read(const char *fName)
             }
             else
             {
-                std::cerr << "Warning! The file \"" << fName << "\" does not seem to contain bit mask information\n";
-                throw std::runtime_error("Error! Unrecognized file format");
+                // 32-bit BMP without a full V5 color header (e.g. standard
+                // 40-byte BITMAPINFOHEADER or 108-byte V4 header).
+                // Use the default BGRA colour masks already set in
+                // bmpColorHeader.  seekg(offsetData) below will skip any
+                // bit-mask bytes that sit between the DIB header and the
+                // pixel data, so nothing else needs to be read here.
+                std::cerr << "Info: \"" << fName
+                          << "\" has no extended colour header – "
+                          << "assuming default BGRA format.\n";
             }
         }
 
