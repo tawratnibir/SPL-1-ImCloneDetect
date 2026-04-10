@@ -431,7 +431,11 @@ int main()
         cout << "Press 2: Find similarity of two images" << endl;
         cout << "Press 3: Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        if (!(cin >> choice))
+        {
+            cerr << "Input not available. Run the app in an interactive terminal (or use make run)." << endl;
+            return 1;
+        }
         cin.ignore();
         switch (choice)
         {
