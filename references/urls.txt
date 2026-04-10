@@ -1,0 +1,23 @@
+Paper 1:
+[1] Y. Wang and D. Liu, “Image-Based Clone Code Detection and Visualization,” 
+978-1-7281-4691-1/19/$31.00 
+©2019 IEEE DOI 10.1109/AIAM48774.2019.00041, pp. 168–175, Oct. 2019, doi: 10.1109/aiam48774.2019.00041. 
+
+Paper 2:
+[2] C. Ragkhitwetsagul, J. Krinke, and B. Marnette, 
+“A picture is worth a thousand words: Code clone detection based on image similarity,” 
+978-1-5386-6430-8/18 © 2018 IEEE IWSC 2018, Campobasso, Italy. Accepted 10.1109/iwsc.2018.8327318. 
+Accepted 10.1109/iwsc.2018.8327318. for Publication by IEEE, Mar. 2018, doi: 
+
+BMP library:
+[3] https://solarianprogrammer.com/2018/11/19/cpp-reading-writing-bmp-images/
+
+DCT:
+[4] https://www.geeksforgeeks.org/dsa/discrete-cosine-transform-algorithm-program/
+
+Bilinear Interpolation:
+[5] https://www.geeksforgeeks.org/maths/what-is-bilinear-interpolation/
+
+GEXF file format:
+[6] https://docs.gephi.org/desktop/User_Manual/Import/GEXF_File_Format/
+

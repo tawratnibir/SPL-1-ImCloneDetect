@@ -30,7 +30,7 @@ desktop.ini
 # Logs and temporary files
 *.log
 res.txt
-
+commands.txt
 # Temporary Office files
 ~$*.pptx
 ~$*.docx
@@ -45,7 +45,7 @@ backupImages/
 outputGrayBlur/
 randomImages/
 graphJson/
-
+inputImages2/
 # IDE and editor files
 .DS_Store
 *.swp

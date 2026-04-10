@@ -23,7 +23,7 @@ Image clone detection tool that compares BMP images using three similarity metri
    ```
    setup.bat
    ```
-   This automatically downloads and installs OR-Tools v9.12 into `optimizationLibs/ortools/`.
+   This downloads and installs OR-Tools v9.12 into `optimizationLibs/ortools/`.
 
 3. **Build the project:**
    Open a **Developer Command Prompt for VS 2022** (or run `vcvars64.bat`), then:
@@ -38,35 +38,40 @@ Image clone detection tool that compares BMP images using three similarity metri
 
 ## Usage
 
-1. Place your BMP images in the `inputImages/` directory.
+1. Put your `.bmp` images in a folder inside the repository (for example: `inputImages/`).
 2. Run `main\run.bat`.
-3. Choose an option from the menu:
-   - **1** - Jaccard similarity for all pairs
-   - **2** - pHash similarity for all pairs
-   - **3** - EMD similarity for all pairs
-   - **4** - Overall weighted score (20% Jaccard + 40% pHash + 40% EMD)
-   - **5** - Single pair similarity (enter two filenames)
-   - **6** - Generate GEXF graph (for [Gephi](https://gephi.org/) visualization)
-   - **7** - Exit
+3. Choose from the menu:
+   - **1** - Pairwise similarity for all `.bmp` files in a directory
+     - Enter a directory name relative to repo root (example: `inputImages`)
+     - Computes Jaccard, pHash, EMD, overall score, and GEXF graph
+   - **2** - Similarity of two images
+     - Enter two file names from `inputImages/` (example: `b1.bmp`, `b2.bmp`)
+     - Computes Jaccard, pHash, EMD, and overall score
+   - **3** - Exit
 
 ## Output
 
-- CSV results are saved in `outCSV/` (jaccard2.csv, pHash2.csv, emd2.csv, overall2.csv)
-- GEXF graph file is saved in `graphJson/overall_graph.gexf`
+- Pairwise CSV files are saved in `outCSV/`:
+  - `jaccard.csv`
+  - `pHash.csv`
+  - `emd.csv`
+  - `overall.csv`
+- Single pair result is saved in `outCSV/singlePairSimilarity.csv`
+- GEXF graph file is saved in `graphFiles/overall_graph.gexf`
 
 ## Project Structure
 
 ```
 ImCloneDetect/
-├── setup.bat          # Downloads OR-Tools dependency
-├── build.bat          # Builds the project (calls nmake)
-├── Makefile           # Build rules
-├── main/
-│   ├── main.cpp       # Main application
-│   └── run.bat        # Runs the compiled program
-├── headers/           # Header files (BMP, pHash, jaccard, emd, Normalizer)
-├── implementation/    # Implementation files
-├── inputImages/       # Place your BMP images here
-├── outCSV/            # CSV output directory
-└── graphFiles/         # GEXF graph output directory
+|-- setup.bat          # Downloads OR-Tools dependency
+|-- build.bat          # Builds the project (calls nmake)
+|-- Makefile           # Build rules
+|-- main/
+|   |-- main.cpp       # Main application
+|   `-- run.bat        # Runs the compiled program
+|-- headers/           # Header files
+|-- implementation/    # Implementation files
+|-- inputImages/       # Input BMP images
+|-- outCSV/            # CSV output directory
+`-- graphFiles/        # GEXF graph output directory
 ```
