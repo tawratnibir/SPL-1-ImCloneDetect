@@ -9,29 +9,26 @@
 #include <vector>
 using namespace std;
 
-namespace
+static bool isClangFormatInstalled()
 {
-    bool isClangFormatInstalled()
-    {
-        return system("clang-format --version > nul 2>&1") == 0;
-    }
+    return system("clang-format --version > nul 2>&1") == 0;
+}
 
-    void printMissingClangFormatMessage()
-    {
-        cout << "clang-format is NOT installed." << endl;
-        cout << "Please install LLVM clang-format to enable formatting." << endl;
-    }
+static void printMissingClangFormatMessage()
+{
+    cout << "clang-format is NOT installed." << endl;
+    cout << "Please install LLVM clang-format to enable formatting." << endl;
+}
 
-    bool isSupportedSourceFile(const std::filesystem::path &path)
-    {
-        string extension = path.extension().string();
-        transform(extension.begin(), extension.end(), extension.begin(),
-                  [](unsigned char ch) { return static_cast<char>(tolower(ch)); });
+static bool isSupportedSourceFile(const std::filesystem::path &path)
+{
+    string extension = path.extension().string();
+    transform(extension.begin(), extension.end(), extension.begin(),
+              [](unsigned char ch) { return static_cast<char>(tolower(ch)); });
 
-        return extension == ".c" || extension == ".cc" || extension == ".cpp"
-            || extension == ".cxx" || extension == ".h" || extension == ".hh"
-            || extension == ".hpp" || extension == ".hxx";
-    }
+    return extension == ".c" || extension == ".cc" || extension == ".cpp"
+        || extension == ".cxx" || extension == ".h" || extension == ".hh"
+        || extension == ".hpp" || extension == ".hxx";
 }
 
 void formatAFile(const string &filePath) {
