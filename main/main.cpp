@@ -3,16 +3,20 @@
 #include "../headers/Normalizer.h"
 #include "../headers/pHash.h"
 #include "../headers/emd.h"
+#include "../headers/formatter.h"
+#include <cctype>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <set>
 #include <stdexcept>
 using namespace std;
 
 #define TITLE "file1, file2, similarity"
-#define INPUT_IMAGE_DIR "../inputImages"
 #define GRAY_DIR "../outputGray/"
+#define GRAY_BLUR_DIR "../outputGrayBlur/"
 #define CSV_DIR "../outCSV/"
 #define RESIZE_DIR "../resizedImage/"
 #define JACCARD_CSV "jaccard.csv"
@@ -23,7 +27,10 @@ using namespace std;
 #define EMD_WEIGHT 0.40
 #define OVERALL_CSV "overall.csv"
 #define GRAPH_JSON_DIR "../graphFiles/"
-#define GRAPH_JSON_FILE "overall_graph.gexf"
+#define GRAPH_JSON_OVERALL "overall_graph.gexf"
+#define GRAPH_JSON_JACCARD "jaccard_graph.gexf"
+#define GRAPH_JSON_PHASH "pHash_graph.gexf"
+#define GRAPH_JSON_EMD "emd_graph.gexf"
 #define KERNEL_RADIUS 10
 #define SIGMA 1.0
 #define HASH_WIDTH 8
@@ -32,6 +39,18 @@ using namespace std;
 #define P_HASH_WIDTH 32
 #define SINGLE_PAIR_CSV "singlePairSimilarity.csv"
 #define PROGRESS_BAR_WIDTH 40
+void ensureDirectoryExists(const string &path)
+{
+    std::filesystem::create_directories(path);
+}
+void ensureOutputDirectories()
+{
+    ensureDirectoryExists(GRAY_DIR);
+    ensureDirectoryExists(GRAY_BLUR_DIR);
+    ensureDirectoryExists(CSV_DIR);
+    ensureDirectoryExists(RESIZE_DIR);
+    ensureDirectoryExists(GRAPH_JSON_DIR);
+}
 void printProgressBar(const string &label, int current, int total)
 {
     double ratio = (double)current / total;
@@ -114,17 +133,32 @@ void writeToCsv(string csvFileName, vector<filePairSimilarity> filePairs)
 }
 void singlePairSimGen(string file1, string file2)
 {
+    namespace fs = std::filesystem;
+
     try {
-        // Validate file extensions
-        if (file1.find(".bmp") == string::npos || file2.find(".bmp") == string::npos) {
+        fs::path imagePath1(file1);
+        fs::path imagePath2(file2);
+
+        string extension1 = imagePath1.extension().string();
+        string extension2 = imagePath2.extension().string();
+        for (char &ch : extension1)
+        {
+            ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
+        }
+        for (char &ch : extension2)
+        {
+            ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
+        }
+
+        if (extension1 != ".bmp" || extension2 != ".bmp") {
             throw runtime_error("Files must be in .bmp format");
         }
         
-        // Check if files exist
-        ifstream check1(file1);
-        ifstream check2(file2);
-        if (!check1.good() || !check2.good()) {
+        if (!fs::exists(imagePath1) || !fs::exists(imagePath2)) {
             throw runtime_error("One or both files not found");
+        }
+        if (!fs::is_regular_file(imagePath1) || !fs::is_regular_file(imagePath2)) {
+            throw runtime_error("Both paths must point to image files");
         }
         
         // cout << "Generating grayscale images..." << endl;
@@ -314,7 +348,7 @@ string stripExtension(const string &name)
         return name.substr(0, dot);
     return name;
 }
-void generateGraphJson(vector<filePairSimilarity> &pairs)
+void generateGraphJson(vector<filePairSimilarity> &pairs, string filenameToBeSaved)
 {
     set<string> vertexSet;
     for (auto &p : pairs)
@@ -353,7 +387,7 @@ void generateGraphJson(vector<filePairSimilarity> &pairs)
     gexf << "  </graph>\n";
     gexf << "</gexf>\n";
 
-    string outPath = string(GRAPH_JSON_DIR) + GRAPH_JSON_FILE;
+    string outPath = string(GRAPH_JSON_DIR) + filenameToBeSaved;
 
     // Ensure the directory exists
     string mkdirCmd = "if not exist \"" + string(GRAPH_JSON_DIR) + "\" mkdir \"" + string(GRAPH_JSON_DIR) + "\"";
@@ -388,19 +422,30 @@ void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
         printProgressBar("Overall", i + 1, totalPairs);
     }
     writeToCsv(OVERALL_CSV, filePairs);
-    generateGraphJson(filePairs);
+    generateGraphJson(filePairs, GRAPH_JSON_OVERALL);
+    generateGraphJson(jaccardPairs, GRAPH_JSON_JACCARD);
+    generateGraphJson(pHashPairs, GRAPH_JSON_PHASH);
+    generateGraphJson(emdPairs, GRAPH_JSON_EMD);
 }
-vector<string> getImagesFromDirectory(string path)
+vector<string> getImagesFromDirectory(const string &path)
 {
     vector<string> files;
     string winPath = path;
     for (auto &c : winPath)
     {
         if (c == '/')
+        {
             c = '\\';
+        }
     }
 
-    system(("dir /b " + winPath + "\\*.bmp > temp_filelist.txt").c_str());
+    string searchPath = winPath;
+    if (!searchPath.empty() && searchPath.back() != '\\')
+    {
+        searchPath.push_back('\\');
+    }
+
+    system(("dir /b \"" + searchPath + "*.bmp\" > temp_filelist.txt").c_str());
 
     ifstream infile("temp_filelist.txt");
     string filename;
@@ -411,45 +456,194 @@ vector<string> getImagesFromDirectory(string path)
 
         if (!filename.empty())
         {
-            files.push_back(winPath + "\\" + filename);
+            files.push_back(searchPath + filename);
         }
     }
+
     infile.close();
     system("del temp_filelist.txt");
     return files;
 }
+
+string normalizePathInput(string input)
+{
+    size_t start = input.find_first_not_of(" \t\r\n");
+    if (start == string::npos)
+    {
+        return "";
+    }
+
+    size_t end = input.find_last_not_of(" \t\r\n");
+    input = input.substr(start, end - start + 1);
+
+    if (input.size() >= 2 && input.front() == '"' && input.back() == '"')
+    {
+        input = input.substr(1, input.size() - 2);
+    }
+
+    return input;
+}
+
+bool isBackCommand(const string &input)
+{
+    string normalized = normalizePathInput(input);
+
+    for (char &ch : normalized)
+    {
+        ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
+    }
+
+    return normalized == "back" || normalized == "b";
+}
+
+bool isBmpPath(const std::filesystem::path &path)
+{
+    string extension = path.extension().string();
+    for (char &ch : extension)
+    {
+        ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
+    }
+
+    return extension == ".bmp";
+}
+
+void runFormatterFromMenu()
+{
+    namespace fs = std::filesystem;
+
+    cout << "\n--- Format a File or Folder ---" << endl;
+    cout << "Enter the full path of the file or folder to format" << endl;
+    cout << "Type 'back' to return to the main menu." << endl;
+    cout << "Path: ";
+
+    string pathInput;
+    getline(cin, pathInput);
+    pathInput = normalizePathInput(pathInput);
+
+    if (isBackCommand(pathInput))
+    {
+        cout << "Returning to the main menu." << endl;
+        return;
+    }
+
+    if (pathInput.empty())
+    {
+        cout << "Path cannot be empty." << endl;
+        return;
+    }
+
+    fs::path targetPath(pathInput);
+    if (!targetPath.is_absolute())
+    {
+        cout << "Please enter the full path, for example: C:\\Users\\Name\\project\\file.cpp" << endl;
+        return;
+    }
+
+    try
+    {
+        if (!fs::exists(targetPath))
+        {
+            cout << "The provided path does not exist." << endl;
+            return;
+        }
+
+        if (fs::is_regular_file(targetPath))
+        {
+            cout << "Formatting file: " << targetPath.string() << endl;
+            formatAFile(targetPath.string());
+            return;
+        }
+
+        if (fs::is_directory(targetPath))
+        {
+            cout << "Formatting supported source files in folder: " << targetPath.string() << endl;
+            formatAFolder(targetPath.string());
+            return;
+        }
+
+        cout << "The path must point to a regular file or a folder." << endl;
+    }
+    catch (const fs::filesystem_error &e)
+    {
+        cout << "Unable to access the provided path: " << e.what() << endl;
+    }
+}
+
 int main()
 {
     int choice = 0;
     string directoryInput;
     vector<string> files;
     string singleFile1, singleFile2;
+    ensureOutputDirectories();
     do
     {
         cout << "\n=== Welcome to ImCloneDetect tool ===" << endl;
         cout << "Press 1: Find pairwise similarity on a folder" << endl;
         cout << "Press 2: Find similarity of two images" << endl;
-        cout << "Press 3: Exit" << endl;
+        cout << "Press 3: Format a file or folder (full path required)" << endl;
+        cout << "Press 4: Exit" << endl;
         cout << "Enter your choice: ";
         if (!(cin >> choice))
         {
-            cerr << "Input not available. Run the app in an interactive terminal (or use make run)." << endl;
-            return 1;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid choice. Please enter a number from 1 to 4." << endl;
+            continue;
         }
-        cin.ignore();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch (choice)
         {
         case 1:
             cout << "\n--- Pairwise Similarity ---" << endl;
-            cout << "Enter the directory name (relative to ImCloneDetect/): ";
+            cout << "Enter the full path of the directory containing BMP images." << endl;
+            cout << "Type 'back' to return to the main menu." << endl;
+            cout << "Directory: ";
             getline(cin, directoryInput);
-            directoryInput = "../" + directoryInput;
-            files = getImagesFromDirectory(directoryInput);
-            if (files.size() == 0)
+            directoryInput = normalizePathInput(directoryInput);
+            if (isBackCommand(directoryInput))
             {
-                cout << "No images found in the directory." << endl;
+                cout << "Returning to the main menu." << endl;
                 break;
             }
+            if (directoryInput.empty())
+            {
+                cout << "Directory name cannot be empty." << endl;
+                break;
+            }
+
+            try
+            {
+                std::filesystem::path inputDirectory(directoryInput);
+                if (!inputDirectory.is_absolute())
+                {
+                    cout << "Please enter the full path, for example: C:\\Users\\Name\\Pictures" << endl;
+                    break;
+                }
+                if (!std::filesystem::exists(inputDirectory))
+                {
+                    cout << "The provided directory does not exist." << endl;
+                    break;
+                }
+                if (!std::filesystem::is_directory(inputDirectory))
+                {
+                    cout << "The provided path must point to a directory." << endl;
+                    break;
+                }
+
+                files = getImagesFromDirectory(inputDirectory.string());
+                if (files.empty())
+                {
+                    cout << "No BMP images found in the directory." << endl;
+                    break;
+                }
+            }
+            catch (const std::filesystem::filesystem_error &e)
+            {
+                cout << "Unable to access the provided directory: " << e.what() << endl;
+                break;
+            }
+
             cout << "Processing " << files.size() << " images..." << endl;
             generateGrayImages(files);
             generateResizedImages(files, P_HASH_HEIGHT, P_HASH_WIDTH);
@@ -468,20 +662,76 @@ int main()
             break;
         case 2:
             cout << "\n--- Compare Two Images ---" << endl;
-            cout << "Files must be in ImCloneDetect/inputImages" << endl;
-            cout << "Enter the first file name: ";
+            cout << "Enter the full path of each BMP image." << endl;
+            cout << "Type 'back' at any prompt to return to the main menu." << endl;
+            cout << "First image path: ";
             getline(cin, singleFile1);
-            cout << "Enter the second file name: ";
+            singleFile1 = normalizePathInput(singleFile1);
+            if (isBackCommand(singleFile1))
+            {
+                cout << "Returning to the main menu." << endl;
+                break;
+            }
+            if (singleFile1.empty())
+            {
+                cout << "First file name cannot be empty." << endl;
+                break;
+            }
+            cout << "Second image path: ";
             getline(cin, singleFile2);
-            directoryInput = INPUT_IMAGE_DIR;
-            singleFile1 = directoryInput + '/' + singleFile1;
-            singleFile2 = directoryInput + '/' + singleFile2;
+            singleFile2 = normalizePathInput(singleFile2);
+            if (isBackCommand(singleFile2))
+            {
+                cout << "Returning to the main menu." << endl;
+                break;
+            }
+            if (singleFile2.empty())
+            {
+                cout << "Second file name cannot be empty." << endl;
+                break;
+            }
+
+            try
+            {
+                std::filesystem::path imagePath1(singleFile1);
+                std::filesystem::path imagePath2(singleFile2);
+
+                if (!imagePath1.is_absolute() || !imagePath2.is_absolute())
+                {
+                    cout << "Please enter full paths for both images, for example: C:\\Users\\Name\\Pictures\\image.bmp" << endl;
+                    break;
+                }
+                if (!std::filesystem::exists(imagePath1) || !std::filesystem::exists(imagePath2))
+                {
+                    cout << "One or both image paths do not exist." << endl;
+                    break;
+                }
+                if (!std::filesystem::is_regular_file(imagePath1) || !std::filesystem::is_regular_file(imagePath2))
+                {
+                    cout << "Both paths must point to files." << endl;
+                    break;
+                }
+                if (!isBmpPath(imagePath1) || !isBmpPath(imagePath2))
+                {
+                    cout << "Both files must be BMP images." << endl;
+                    break;
+                }
+            }
+            catch (const std::filesystem::filesystem_error &e)
+            {
+                cout << "Unable to access one or both image paths: " << e.what() << endl;
+                break;
+            }
+
             cout << "\nComparing:" << endl;
             cout << "  File 1: " << singleFile1 << endl;
             cout << "  File 2: " << singleFile2 << endl;
             singlePairSimGen(singleFile1, singleFile2);
             break;
         case 3:
+            runFormatterFromMenu();
+            break;
+        case 4:
             cout << "\nThank you for using ImCloneDetect!" << endl;
             cout << "Exiting..." << endl;
             break;
@@ -489,5 +739,5 @@ int main()
             cout << "Invalid choice. Please try again." << endl;
             break;
         }
-    } while (choice != 3);
+    } while (choice != 4);
 }

@@ -6,8 +6,8 @@ VCVARS ?= C:\Program Files\Microsoft Visual Studio\18\Insiders\VC\Auxiliary\Buil
 WORKDIR := $(subst /,\,$(CURDIR))
 
 TARGET := main\main.exe
-SOURCES := main\main.cpp implementation\BMP.cpp implementation\Normalizer.cpp implementation\jaccard.cpp implementation\pHash.cpp implementation\emd.cpp
-HEADERS := headers\BMP.h headers\Normalizer.h headers\jaccard.h headers\pHash.h headers\emd.h
+SOURCES := main\main.cpp implementation\BMP.cpp implementation\Normalizer.cpp implementation\jaccard.cpp implementation\pHash.cpp implementation\emd.cpp implementation\formatter.cpp
+HEADERS := headers\BMP.h headers\Normalizer.h headers\jaccard.h headers\pHash.h headers\emd.h headers\formatter.h
 
 ORTOOLS_DIR := optimizationLibs\ortools
 ORTOOLS_INCLUDE := $(ORTOOLS_DIR)\include

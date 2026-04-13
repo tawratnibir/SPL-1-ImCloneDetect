@@ -1,0 +1,1537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://gexf.net/1.3" version="1.3">
+  <graph mode="static" defaultedgetype="undirected">
+    <attributes class="edge">
+      <attribute id="0" title="similarity" type="double"/>
+    </attributes>
+    <nodes>
+      <node id="b1_gray" label="b1_gray"/>
+      <node id="b2_gray" label="b2_gray"/>
+      <node id="b3_gray" label="b3_gray"/>
+      <node id="b4_gray" label="b4_gray"/>
+      <node id="b5_gray" label="b5_gray"/>
+      <node id="bfs1_gray" label="bfs1_gray"/>
+      <node id="bfs2_gray" label="bfs2_gray"/>
+      <node id="bfs3_gray" label="bfs3_gray"/>
+      <node id="bfs4_gray" label="bfs4_gray"/>
+      <node id="bfs5_gray" label="bfs5_gray"/>
+      <node id="bin1_gray" label="bin1_gray"/>
+      <node id="bin2_gray" label="bin2_gray"/>
+      <node id="bin3_gray" label="bin3_gray"/>
+      <node id="bin4_gray" label="bin4_gray"/>
+      <node id="bin5_gray" label="bin5_gray"/>
+      <node id="dfs1_gray" label="dfs1_gray"/>
+      <node id="dfs2_gray" label="dfs2_gray"/>
+      <node id="dfs3_gray" label="dfs3_gray"/>
+      <node id="dfs4_gray" label="dfs4_gray"/>
+      <node id="dfs5_gray" label="dfs5_gray"/>
+      <node id="i1_gray" label="i1_gray"/>
+      <node id="i2_gray" label="i2_gray"/>
+      <node id="i3_gray" label="i3_gray"/>
+      <node id="i4_gray" label="i4_gray"/>
+      <node id="i5_gray" label="i5_gray"/>
+    </nodes>
+    <edges>
+      <edge id="0" source="b1_gray" target="b2_gray" weight="0.910931">
+        <attvalues>
+          <attvalue for="0" value="0.910931"/>
+        </attvalues>
+      </edge>
+      <edge id="1" source="b1_gray" target="b3_gray" weight="0.906048">
+        <attvalues>
+          <attvalue for="0" value="0.906048"/>
+        </attvalues>
+      </edge>
+      <edge id="2" source="b1_gray" target="b4_gray" weight="0.90583">
+        <attvalues>
+          <attvalue for="0" value="0.90583"/>
+        </attvalues>
+      </edge>
+      <edge id="3" source="b1_gray" target="b5_gray" weight="0.0881253">
+        <attvalues>
+          <attvalue for="0" value="0.0881253"/>
+        </attvalues>
+      </edge>
+      <edge id="4" source="b1_gray" target="bfs1_gray" weight="0.00492279">
+        <attvalues>
+          <attvalue for="0" value="0.00492279"/>
+        </attvalues>
+      </edge>
+      <edge id="5" source="b1_gray" target="bfs2_gray" weight="0.00443478">
+        <attvalues>
+          <attvalue for="0" value="0.00443478"/>
+        </attvalues>
+      </edge>
+      <edge id="6" source="b1_gray" target="bfs3_gray" weight="0.00278223">
+        <attvalues>
+          <attvalue for="0" value="0.00278223"/>
+        </attvalues>
+      </edge>
+      <edge id="7" source="b1_gray" target="bfs4_gray" weight="0.00897674">
+        <attvalues>
+          <attvalue for="0" value="0.00897674"/>
+        </attvalues>
+      </edge>
+      <edge id="8" source="b1_gray" target="bfs5_gray" weight="0.00539962">
+        <attvalues>
+          <attvalue for="0" value="0.00539962"/>
+        </attvalues>
+      </edge>
+      <edge id="9" source="b1_gray" target="bin1_gray" weight="0.013228">
+        <attvalues>
+          <attvalue for="0" value="0.013228"/>
+        </attvalues>
+      </edge>
+      <edge id="10" source="b1_gray" target="bin2_gray" weight="0.0124113">
+        <attvalues>
+          <attvalue for="0" value="0.0124113"/>
+        </attvalues>
+      </edge>
+      <edge id="11" source="b1_gray" target="bin3_gray" weight="0.0140292">
+        <attvalues>
+          <attvalue for="0" value="0.0140292"/>
+        </attvalues>
+      </edge>
+      <edge id="12" source="b1_gray" target="bin4_gray" weight="0.0127501">
+        <attvalues>
+          <attvalue for="0" value="0.0127501"/>
+        </attvalues>
+      </edge>
+      <edge id="13" source="b1_gray" target="bin5_gray" weight="0.011426">
+        <attvalues>
+          <attvalue for="0" value="0.011426"/>
+        </attvalues>
+      </edge>
+      <edge id="14" source="b1_gray" target="dfs1_gray" weight="0.00951607">
+        <attvalues>
+          <attvalue for="0" value="0.00951607"/>
+        </attvalues>
+      </edge>
+      <edge id="15" source="b1_gray" target="dfs2_gray" weight="0.00784857">
+        <attvalues>
+          <attvalue for="0" value="0.00784857"/>
+        </attvalues>
+      </edge>
+      <edge id="16" source="b1_gray" target="dfs3_gray" weight="0.0106863">
+        <attvalues>
+          <attvalue for="0" value="0.0106863"/>
+        </attvalues>
+      </edge>
+      <edge id="17" source="b1_gray" target="dfs4_gray" weight="0.0098953">
+        <attvalues>
+          <attvalue for="0" value="0.0098953"/>
+        </attvalues>
+      </edge>
+      <edge id="18" source="b1_gray" target="dfs5_gray" weight="0.00365594">
+        <attvalues>
+          <attvalue for="0" value="0.00365594"/>
+        </attvalues>
+      </edge>
+      <edge id="19" source="b1_gray" target="i1_gray" weight="0.105286">
+        <attvalues>
+          <attvalue for="0" value="0.105286"/>
+        </attvalues>
+      </edge>
+      <edge id="20" source="b1_gray" target="i2_gray" weight="0.108932">
+        <attvalues>
+          <attvalue for="0" value="0.108932"/>
+        </attvalues>
+      </edge>
+      <edge id="21" source="b1_gray" target="i3_gray" weight="0.120945">
+        <attvalues>
+          <attvalue for="0" value="0.120945"/>
+        </attvalues>
+      </edge>
+      <edge id="22" source="b1_gray" target="i4_gray" weight="0.106013">
+        <attvalues>
+          <attvalue for="0" value="0.106013"/>
+        </attvalues>
+      </edge>
+      <edge id="23" source="b1_gray" target="i5_gray" weight="0.103818">
+        <attvalues>
+          <attvalue for="0" value="0.103818"/>
+        </attvalues>
+      </edge>
+      <edge id="24" source="b2_gray" target="b3_gray" weight="0.983528">
+        <attvalues>
+          <attvalue for="0" value="0.983528"/>
+        </attvalues>
+      </edge>
+      <edge id="25" source="b2_gray" target="b4_gray" weight="0.981333">
+        <attvalues>
+          <attvalue for="0" value="0.981333"/>
+        </attvalues>
+      </edge>
+      <edge id="26" source="b2_gray" target="b5_gray" weight="0.0874851">
+        <attvalues>
+          <attvalue for="0" value="0.0874851"/>
+        </attvalues>
+      </edge>
+      <edge id="27" source="b2_gray" target="bfs1_gray" weight="0.00490174">
+        <attvalues>
+          <attvalue for="0" value="0.00490174"/>
+        </attvalues>
+      </edge>
+      <edge id="28" source="b2_gray" target="bfs2_gray" weight="0.00441746">
+        <attvalues>
+          <attvalue for="0" value="0.00441746"/>
+        </attvalues>
+      </edge>
+      <edge id="29" source="b2_gray" target="bfs3_gray" weight="0.00277129">
+        <attvalues>
+          <attvalue for="0" value="0.00277129"/>
+        </attvalues>
+      </edge>
+      <edge id="30" source="b2_gray" target="bfs4_gray" weight="0.00912101">
+        <attvalues>
+          <attvalue for="0" value="0.00912101"/>
+        </attvalues>
+      </edge>
+      <edge id="31" source="b2_gray" target="bfs5_gray" weight="0.00610067">
+        <attvalues>
+          <attvalue for="0" value="0.00610067"/>
+        </attvalues>
+      </edge>
+      <edge id="32" source="b2_gray" target="bin1_gray" weight="0.0133516">
+        <attvalues>
+          <attvalue for="0" value="0.0133516"/>
+        </attvalues>
+      </edge>
+      <edge id="33" source="b2_gray" target="bin2_gray" weight="0.0125389">
+        <attvalues>
+          <attvalue for="0" value="0.0125389"/>
+        </attvalues>
+      </edge>
+      <edge id="34" source="b2_gray" target="bin3_gray" weight="0.0138833">
+        <attvalues>
+          <attvalue for="0" value="0.0138833"/>
+        </attvalues>
+      </edge>
+      <edge id="35" source="b2_gray" target="bin4_gray" weight="0.0128694">
+        <attvalues>
+          <attvalue for="0" value="0.0128694"/>
+        </attvalues>
+      </edge>
+      <edge id="36" source="b2_gray" target="bin5_gray" weight="0.0115572">
+        <attvalues>
+          <attvalue for="0" value="0.0115572"/>
+        </attvalues>
+      </edge>
+      <edge id="37" source="b2_gray" target="dfs1_gray" weight="0.00947101">
+        <attvalues>
+          <attvalue for="0" value="0.00947101"/>
+        </attvalues>
+      </edge>
+      <edge id="38" source="b2_gray" target="dfs2_gray" weight="0.00837993">
+        <attvalues>
+          <attvalue for="0" value="0.00837993"/>
+        </attvalues>
+      </edge>
+      <edge id="39" source="b2_gray" target="dfs3_gray" weight="0.012128">
+        <attvalues>
+          <attvalue for="0" value="0.012128"/>
+        </attvalues>
+      </edge>
+      <edge id="40" source="b2_gray" target="dfs4_gray" weight="0.00984988">
+        <attvalues>
+          <attvalue for="0" value="0.00984988"/>
+        </attvalues>
+      </edge>
+      <edge id="41" source="b2_gray" target="dfs5_gray" weight="0.0036403">
+        <attvalues>
+          <attvalue for="0" value="0.0036403"/>
+        </attvalues>
+      </edge>
+      <edge id="42" source="b2_gray" target="i1_gray" weight="0.107299">
+        <attvalues>
+          <attvalue for="0" value="0.107299"/>
+        </attvalues>
+      </edge>
+      <edge id="43" source="b2_gray" target="i2_gray" weight="0.107434">
+        <attvalues>
+          <attvalue for="0" value="0.107434"/>
+        </attvalues>
+      </edge>
+      <edge id="44" source="b2_gray" target="i3_gray" weight="0.118675">
+        <attvalues>
+          <attvalue for="0" value="0.118675"/>
+        </attvalues>
+      </edge>
+      <edge id="45" source="b2_gray" target="i4_gray" weight="0.108033">
+        <attvalues>
+          <attvalue for="0" value="0.108033"/>
+        </attvalues>
+      </edge>
+      <edge id="46" source="b2_gray" target="i5_gray" weight="0.105029">
+        <attvalues>
+          <attvalue for="0" value="0.105029"/>
+        </attvalues>
+      </edge>
+      <edge id="47" source="b3_gray" target="b4_gray" weight="0.981081">
+        <attvalues>
+          <attvalue for="0" value="0.981081"/>
+        </attvalues>
+      </edge>
+      <edge id="48" source="b3_gray" target="b5_gray" weight="0.0871566">
+        <attvalues>
+          <attvalue for="0" value="0.0871566"/>
+        </attvalues>
+      </edge>
+      <edge id="49" source="b3_gray" target="bfs1_gray" weight="0.00490062">
+        <attvalues>
+          <attvalue for="0" value="0.00490062"/>
+        </attvalues>
+      </edge>
+      <edge id="50" source="b3_gray" target="bfs2_gray" weight="0.00441654">
+        <attvalues>
+          <attvalue for="0" value="0.00441654"/>
+        </attvalues>
+      </edge>
+      <edge id="51" source="b3_gray" target="bfs3_gray" weight="0.0027707">
+        <attvalues>
+          <attvalue for="0" value="0.0027707"/>
+        </attvalues>
+      </edge>
+      <edge id="52" source="b3_gray" target="bfs4_gray" weight="0.00913414">
+        <attvalues>
+          <attvalue for="0" value="0.00913414"/>
+        </attvalues>
+      </edge>
+      <edge id="53" source="b3_gray" target="bfs5_gray" weight="0.00609956">
+        <attvalues>
+          <attvalue for="0" value="0.00609956"/>
+        </attvalues>
+      </edge>
+      <edge id="54" source="b3_gray" target="bin1_gray" weight="0.0132111">
+        <attvalues>
+          <attvalue for="0" value="0.0132111"/>
+        </attvalues>
+      </edge>
+      <edge id="55" source="b3_gray" target="bin2_gray" weight="0.0123991">
+        <attvalues>
+          <attvalue for="0" value="0.0123991"/>
+        </attvalues>
+      </edge>
+      <edge id="56" source="b3_gray" target="bin3_gray" weight="0.0137131">
+        <attvalues>
+          <attvalue for="0" value="0.0137131"/>
+        </attvalues>
+      </edge>
+      <edge id="57" source="b3_gray" target="bin4_gray" weight="0.0127366">
+        <attvalues>
+          <attvalue for="0" value="0.0127366"/>
+        </attvalues>
+      </edge>
+      <edge id="58" source="b3_gray" target="bin5_gray" weight="0.0114193">
+        <attvalues>
+          <attvalue for="0" value="0.0114193"/>
+        </attvalues>
+      </edge>
+      <edge id="59" source="b3_gray" target="dfs1_gray" weight="0.00946861">
+        <attvalues>
+          <attvalue for="0" value="0.00946861"/>
+        </attvalues>
+      </edge>
+      <edge id="60" source="b3_gray" target="dfs2_gray" weight="0.00820952">
+        <attvalues>
+          <attvalue for="0" value="0.00820952"/>
+        </attvalues>
+      </edge>
+      <edge id="61" source="b3_gray" target="dfs3_gray" weight="0.0125843">
+        <attvalues>
+          <attvalue for="0" value="0.0125843"/>
+        </attvalues>
+      </edge>
+      <edge id="62" source="b3_gray" target="dfs4_gray" weight="0.00984747">
+        <attvalues>
+          <attvalue for="0" value="0.00984747"/>
+        </attvalues>
+      </edge>
+      <edge id="63" source="b3_gray" target="dfs5_gray" weight="0.00363946">
+        <attvalues>
+          <attvalue for="0" value="0.00363946"/>
+        </attvalues>
+      </edge>
+      <edge id="64" source="b3_gray" target="i1_gray" weight="0.107724">
+        <attvalues>
+          <attvalue for="0" value="0.107724"/>
+        </attvalues>
+      </edge>
+      <edge id="65" source="b3_gray" target="i2_gray" weight="0.107388">
+        <attvalues>
+          <attvalue for="0" value="0.107388"/>
+        </attvalues>
+      </edge>
+      <edge id="66" source="b3_gray" target="i3_gray" weight="0.118367">
+        <attvalues>
+          <attvalue for="0" value="0.118367"/>
+        </attvalues>
+      </edge>
+      <edge id="67" source="b3_gray" target="i4_gray" weight="0.10846">
+        <attvalues>
+          <attvalue for="0" value="0.10846"/>
+        </attvalues>
+      </edge>
+      <edge id="68" source="b3_gray" target="i5_gray" weight="0.105456">
+        <attvalues>
+          <attvalue for="0" value="0.105456"/>
+        </attvalues>
+      </edge>
+      <edge id="69" source="b4_gray" target="b5_gray" weight="0.0875551">
+        <attvalues>
+          <attvalue for="0" value="0.0875551"/>
+        </attvalues>
+      </edge>
+      <edge id="70" source="b4_gray" target="bfs1_gray" weight="0.00490136">
+        <attvalues>
+          <attvalue for="0" value="0.00490136"/>
+        </attvalues>
+      </edge>
+      <edge id="71" source="b4_gray" target="bfs2_gray" weight="0.00441716">
+        <attvalues>
+          <attvalue for="0" value="0.00441716"/>
+        </attvalues>
+      </edge>
+      <edge id="72" source="b4_gray" target="bfs3_gray" weight="0.00277109">
+        <attvalues>
+          <attvalue for="0" value="0.00277109"/>
+        </attvalues>
+      </edge>
+      <edge id="73" source="b4_gray" target="bfs4_gray" weight="0.00899884">
+        <attvalues>
+          <attvalue for="0" value="0.00899884"/>
+        </attvalues>
+      </edge>
+      <edge id="74" source="b4_gray" target="bfs5_gray" weight="0.0061003">
+        <attvalues>
+          <attvalue for="0" value="0.0061003"/>
+        </attvalues>
+      </edge>
+      <edge id="75" source="b4_gray" target="bin1_gray" weight="0.0131356">
+        <attvalues>
+          <attvalue for="0" value="0.0131356"/>
+        </attvalues>
+      </edge>
+      <edge id="76" source="b4_gray" target="bin2_gray" weight="0.0123236">
+        <attvalues>
+          <attvalue for="0" value="0.0123236"/>
+        </attvalues>
+      </edge>
+      <edge id="77" source="b4_gray" target="bin3_gray" weight="0.0136417">
+        <attvalues>
+          <attvalue for="0" value="0.0136417"/>
+        </attvalues>
+      </edge>
+      <edge id="78" source="b4_gray" target="bin4_gray" weight="0.0126651">
+        <attvalues>
+          <attvalue for="0" value="0.0126651"/>
+        </attvalues>
+      </edge>
+      <edge id="79" source="b4_gray" target="bin5_gray" weight="0.0113446">
+        <attvalues>
+          <attvalue for="0" value="0.0113446"/>
+        </attvalues>
+      </edge>
+      <edge id="80" source="b4_gray" target="dfs1_gray" weight="0.00957228">
+        <attvalues>
+          <attvalue for="0" value="0.00957228"/>
+        </attvalues>
+      </edge>
+      <edge id="81" source="b4_gray" target="dfs2_gray" weight="0.00821066">
+        <attvalues>
+          <attvalue for="0" value="0.00821066"/>
+        </attvalues>
+      </edge>
+      <edge id="82" source="b4_gray" target="dfs3_gray" weight="0.012505">
+        <attvalues>
+          <attvalue for="0" value="0.012505"/>
+        </attvalues>
+      </edge>
+      <edge id="83" source="b4_gray" target="dfs4_gray" weight="0.00994805">
+        <attvalues>
+          <attvalue for="0" value="0.00994805"/>
+        </attvalues>
+      </edge>
+      <edge id="84" source="b4_gray" target="dfs5_gray" weight="0.00368588">
+        <attvalues>
+          <attvalue for="0" value="0.00368588"/>
+        </attvalues>
+      </edge>
+      <edge id="85" source="b4_gray" target="i1_gray" weight="0.107755">
+        <attvalues>
+          <attvalue for="0" value="0.107755"/>
+        </attvalues>
+      </edge>
+      <edge id="86" source="b4_gray" target="i2_gray" weight="0.107419">
+        <attvalues>
+          <attvalue for="0" value="0.107419"/>
+        </attvalues>
+      </edge>
+      <edge id="87" source="b4_gray" target="i3_gray" weight="0.118658">
+        <attvalues>
+          <attvalue for="0" value="0.118658"/>
+        </attvalues>
+      </edge>
+      <edge id="88" source="b4_gray" target="i4_gray" weight="0.108491">
+        <attvalues>
+          <attvalue for="0" value="0.108491"/>
+        </attvalues>
+      </edge>
+      <edge id="89" source="b4_gray" target="i5_gray" weight="0.105486">
+        <attvalues>
+          <attvalue for="0" value="0.105486"/>
+        </attvalues>
+      </edge>
+      <edge id="90" source="b5_gray" target="bfs1_gray" weight="0.0177623">
+        <attvalues>
+          <attvalue for="0" value="0.0177623"/>
+        </attvalues>
+      </edge>
+      <edge id="91" source="b5_gray" target="bfs2_gray" weight="0.0181342">
+        <attvalues>
+          <attvalue for="0" value="0.0181342"/>
+        </attvalues>
+      </edge>
+      <edge id="92" source="b5_gray" target="bfs3_gray" weight="0.0169744">
+        <attvalues>
+          <attvalue for="0" value="0.0169744"/>
+        </attvalues>
+      </edge>
+      <edge id="93" source="b5_gray" target="bfs4_gray" weight="0.0310495">
+        <attvalues>
+          <attvalue for="0" value="0.0310495"/>
+        </attvalues>
+      </edge>
+      <edge id="94" source="b5_gray" target="bfs5_gray" weight="0.0112125">
+        <attvalues>
+          <attvalue for="0" value="0.0112125"/>
+        </attvalues>
+      </edge>
+      <edge id="95" source="b5_gray" target="bin1_gray" weight="0.0288162">
+        <attvalues>
+          <attvalue for="0" value="0.0288162"/>
+        </attvalues>
+      </edge>
+      <edge id="96" source="b5_gray" target="bin2_gray" weight="0.0282507">
+        <attvalues>
+          <attvalue for="0" value="0.0282507"/>
+        </attvalues>
+      </edge>
+      <edge id="97" source="b5_gray" target="bin3_gray" weight="0.03147">
+        <attvalues>
+          <attvalue for="0" value="0.03147"/>
+        </attvalues>
+      </edge>
+      <edge id="98" source="b5_gray" target="bin4_gray" weight="0.0189762">
+        <attvalues>
+          <attvalue for="0" value="0.0189762"/>
+        </attvalues>
+      </edge>
+      <edge id="99" source="b5_gray" target="bin5_gray" weight="0.0193036">
+        <attvalues>
+          <attvalue for="0" value="0.0193036"/>
+        </attvalues>
+      </edge>
+      <edge id="100" source="b5_gray" target="dfs1_gray" weight="0.03439">
+        <attvalues>
+          <attvalue for="0" value="0.03439"/>
+        </attvalues>
+      </edge>
+      <edge id="101" source="b5_gray" target="dfs2_gray" weight="0.027801">
+        <attvalues>
+          <attvalue for="0" value="0.027801"/>
+        </attvalues>
+      </edge>
+      <edge id="102" source="b5_gray" target="dfs3_gray" weight="0.0257742">
+        <attvalues>
+          <attvalue for="0" value="0.0257742"/>
+        </attvalues>
+      </edge>
+      <edge id="103" source="b5_gray" target="dfs4_gray" weight="0.033387">
+        <attvalues>
+          <attvalue for="0" value="0.033387"/>
+        </attvalues>
+      </edge>
+      <edge id="104" source="b5_gray" target="dfs5_gray" weight="0.0144858">
+        <attvalues>
+          <attvalue for="0" value="0.0144858"/>
+        </attvalues>
+      </edge>
+      <edge id="105" source="b5_gray" target="i1_gray" weight="0.113211">
+        <attvalues>
+          <attvalue for="0" value="0.113211"/>
+        </attvalues>
+      </edge>
+      <edge id="106" source="b5_gray" target="i2_gray" weight="0.120223">
+        <attvalues>
+          <attvalue for="0" value="0.120223"/>
+        </attvalues>
+      </edge>
+      <edge id="107" source="b5_gray" target="i3_gray" weight="0.120035">
+        <attvalues>
+          <attvalue for="0" value="0.120035"/>
+        </attvalues>
+      </edge>
+      <edge id="108" source="b5_gray" target="i4_gray" weight="0.112363">
+        <attvalues>
+          <attvalue for="0" value="0.112363"/>
+        </attvalues>
+      </edge>
+      <edge id="109" source="b5_gray" target="i5_gray" weight="0.110607">
+        <attvalues>
+          <attvalue for="0" value="0.110607"/>
+        </attvalues>
+      </edge>
+      <edge id="110" source="bfs1_gray" target="bfs2_gray" weight="0.652741">
+        <attvalues>
+          <attvalue for="0" value="0.652741"/>
+        </attvalues>
+      </edge>
+      <edge id="111" source="bfs1_gray" target="bfs3_gray" weight="0.157065">
+        <attvalues>
+          <attvalue for="0" value="0.157065"/>
+        </attvalues>
+      </edge>
+      <edge id="112" source="bfs1_gray" target="bfs4_gray" weight="0.126753">
+        <attvalues>
+          <attvalue for="0" value="0.126753"/>
+        </attvalues>
+      </edge>
+      <edge id="113" source="bfs1_gray" target="bfs5_gray" weight="0.0850045">
+        <attvalues>
+          <attvalue for="0" value="0.0850045"/>
+        </attvalues>
+      </edge>
+      <edge id="114" source="bfs1_gray" target="bin1_gray" weight="0.0493601">
+        <attvalues>
+          <attvalue for="0" value="0.0493601"/>
+        </attvalues>
+      </edge>
+      <edge id="115" source="bfs1_gray" target="bin2_gray" weight="0.0471825">
+        <attvalues>
+          <attvalue for="0" value="0.0471825"/>
+        </attvalues>
+      </edge>
+      <edge id="116" source="bfs1_gray" target="bin3_gray" weight="0.0473813">
+        <attvalues>
+          <attvalue for="0" value="0.0473813"/>
+        </attvalues>
+      </edge>
+      <edge id="117" source="bfs1_gray" target="bin4_gray" weight="0.0485522">
+        <attvalues>
+          <attvalue for="0" value="0.0485522"/>
+        </attvalues>
+      </edge>
+      <edge id="118" source="bfs1_gray" target="bin5_gray" weight="0.0516183">
+        <attvalues>
+          <attvalue for="0" value="0.0516183"/>
+        </attvalues>
+      </edge>
+      <edge id="119" source="bfs1_gray" target="dfs1_gray" weight="0.114651">
+        <attvalues>
+          <attvalue for="0" value="0.114651"/>
+        </attvalues>
+      </edge>
+      <edge id="120" source="bfs1_gray" target="dfs2_gray" weight="0.171902">
+        <attvalues>
+          <attvalue for="0" value="0.171902"/>
+        </attvalues>
+      </edge>
+      <edge id="121" source="bfs1_gray" target="dfs3_gray" weight="0.129623">
+        <attvalues>
+          <attvalue for="0" value="0.129623"/>
+        </attvalues>
+      </edge>
+      <edge id="122" source="bfs1_gray" target="dfs4_gray" weight="0.107196">
+        <attvalues>
+          <attvalue for="0" value="0.107196"/>
+        </attvalues>
+      </edge>
+      <edge id="123" source="bfs1_gray" target="dfs5_gray" weight="0.144179">
+        <attvalues>
+          <attvalue for="0" value="0.144179"/>
+        </attvalues>
+      </edge>
+      <edge id="124" source="bfs1_gray" target="i1_gray" weight="0.0145436">
+        <attvalues>
+          <attvalue for="0" value="0.0145436"/>
+        </attvalues>
+      </edge>
+      <edge id="125" source="bfs1_gray" target="i2_gray" weight="0.0150862">
+        <attvalues>
+          <attvalue for="0" value="0.0150862"/>
+        </attvalues>
+      </edge>
+      <edge id="126" source="bfs1_gray" target="i3_gray" weight="0.0201036">
+        <attvalues>
+          <attvalue for="0" value="0.0201036"/>
+        </attvalues>
+      </edge>
+      <edge id="127" source="bfs1_gray" target="i4_gray" weight="0.0137104">
+        <attvalues>
+          <attvalue for="0" value="0.0137104"/>
+        </attvalues>
+      </edge>
+      <edge id="128" source="bfs1_gray" target="i5_gray" weight="0.0137358">
+        <attvalues>
+          <attvalue for="0" value="0.0137358"/>
+        </attvalues>
+      </edge>
+      <edge id="129" source="bfs2_gray" target="bfs3_gray" weight="0.150326">
+        <attvalues>
+          <attvalue for="0" value="0.150326"/>
+        </attvalues>
+      </edge>
+      <edge id="130" source="bfs2_gray" target="bfs4_gray" weight="0.125757">
+        <attvalues>
+          <attvalue for="0" value="0.125757"/>
+        </attvalues>
+      </edge>
+      <edge id="131" source="bfs2_gray" target="bfs5_gray" weight="0.0833057">
+        <attvalues>
+          <attvalue for="0" value="0.0833057"/>
+        </attvalues>
+      </edge>
+      <edge id="132" source="bfs2_gray" target="bin1_gray" weight="0.0552511">
+        <attvalues>
+          <attvalue for="0" value="0.0552511"/>
+        </attvalues>
+      </edge>
+      <edge id="133" source="bfs2_gray" target="bin2_gray" weight="0.0533182">
+        <attvalues>
+          <attvalue for="0" value="0.0533182"/>
+        </attvalues>
+      </edge>
+      <edge id="134" source="bfs2_gray" target="bin3_gray" weight="0.0517577">
+        <attvalues>
+          <attvalue for="0" value="0.0517577"/>
+        </attvalues>
+      </edge>
+      <edge id="135" source="bfs2_gray" target="bin4_gray" weight="0.0576344">
+        <attvalues>
+          <attvalue for="0" value="0.0576344"/>
+        </attvalues>
+      </edge>
+      <edge id="136" source="bfs2_gray" target="bin5_gray" weight="0.0622642">
+        <attvalues>
+          <attvalue for="0" value="0.0622642"/>
+        </attvalues>
+      </edge>
+      <edge id="137" source="bfs2_gray" target="dfs1_gray" weight="0.130295">
+        <attvalues>
+          <attvalue for="0" value="0.130295"/>
+        </attvalues>
+      </edge>
+      <edge id="138" source="bfs2_gray" target="dfs2_gray" weight="0.195121">
+        <attvalues>
+          <attvalue for="0" value="0.195121"/>
+        </attvalues>
+      </edge>
+      <edge id="139" source="bfs2_gray" target="dfs3_gray" weight="0.129715">
+        <attvalues>
+          <attvalue for="0" value="0.129715"/>
+        </attvalues>
+      </edge>
+      <edge id="140" source="bfs2_gray" target="dfs4_gray" weight="0.124636">
+        <attvalues>
+          <attvalue for="0" value="0.124636"/>
+        </attvalues>
+      </edge>
+      <edge id="141" source="bfs2_gray" target="dfs5_gray" weight="0.148298">
+        <attvalues>
+          <attvalue for="0" value="0.148298"/>
+        </attvalues>
+      </edge>
+      <edge id="142" source="bfs2_gray" target="i1_gray" weight="0.0138149">
+        <attvalues>
+          <attvalue for="0" value="0.0138149"/>
+        </attvalues>
+      </edge>
+      <edge id="143" source="bfs2_gray" target="i2_gray" weight="0.0143101">
+        <attvalues>
+          <attvalue for="0" value="0.0143101"/>
+        </attvalues>
+      </edge>
+      <edge id="144" source="bfs2_gray" target="i3_gray" weight="0.0175606">
+        <attvalues>
+          <attvalue for="0" value="0.0175606"/>
+        </attvalues>
+      </edge>
+      <edge id="145" source="bfs2_gray" target="i4_gray" weight="0.0130523">
+        <attvalues>
+          <attvalue for="0" value="0.0130523"/>
+        </attvalues>
+      </edge>
+      <edge id="146" source="bfs2_gray" target="i5_gray" weight="0.0130751">
+        <attvalues>
+          <attvalue for="0" value="0.0130751"/>
+        </attvalues>
+      </edge>
+      <edge id="147" source="bfs3_gray" target="bfs4_gray" weight="0.12813">
+        <attvalues>
+          <attvalue for="0" value="0.12813"/>
+        </attvalues>
+      </edge>
+      <edge id="148" source="bfs3_gray" target="bfs5_gray" weight="0.112674">
+        <attvalues>
+          <attvalue for="0" value="0.112674"/>
+        </attvalues>
+      </edge>
+      <edge id="149" source="bfs3_gray" target="bin1_gray" weight="0.0412953">
+        <attvalues>
+          <attvalue for="0" value="0.0412953"/>
+        </attvalues>
+      </edge>
+      <edge id="150" source="bfs3_gray" target="bin2_gray" weight="0.0393698">
+        <attvalues>
+          <attvalue for="0" value="0.0393698"/>
+        </attvalues>
+      </edge>
+      <edge id="151" source="bfs3_gray" target="bin3_gray" weight="0.0395774">
+        <attvalues>
+          <attvalue for="0" value="0.0395774"/>
+        </attvalues>
+      </edge>
+      <edge id="152" source="bfs3_gray" target="bin4_gray" weight="0.0457136">
+        <attvalues>
+          <attvalue for="0" value="0.0457136"/>
+        </attvalues>
+      </edge>
+      <edge id="153" source="bfs3_gray" target="bin5_gray" weight="0.0513844">
+        <attvalues>
+          <attvalue for="0" value="0.0513844"/>
+        </attvalues>
+      </edge>
+      <edge id="154" source="bfs3_gray" target="dfs1_gray" weight="0.0893709">
+        <attvalues>
+          <attvalue for="0" value="0.0893709"/>
+        </attvalues>
+      </edge>
+      <edge id="155" source="bfs3_gray" target="dfs2_gray" weight="0.126838">
+        <attvalues>
+          <attvalue for="0" value="0.126838"/>
+        </attvalues>
+      </edge>
+      <edge id="156" source="bfs3_gray" target="dfs3_gray" weight="0.115994">
+        <attvalues>
+          <attvalue for="0" value="0.115994"/>
+        </attvalues>
+      </edge>
+      <edge id="157" source="bfs3_gray" target="dfs4_gray" weight="0.0873356">
+        <attvalues>
+          <attvalue for="0" value="0.0873356"/>
+        </attvalues>
+      </edge>
+      <edge id="158" source="bfs3_gray" target="dfs5_gray" weight="0.173949">
+        <attvalues>
+          <attvalue for="0" value="0.173949"/>
+        </attvalues>
+      </edge>
+      <edge id="159" source="bfs3_gray" target="i1_gray" weight="0.0131678">
+        <attvalues>
+          <attvalue for="0" value="0.0131678"/>
+        </attvalues>
+      </edge>
+      <edge id="160" source="bfs3_gray" target="i2_gray" weight="0.0136946">
+        <attvalues>
+          <attvalue for="0" value="0.0136946"/>
+        </attvalues>
+      </edge>
+      <edge id="161" source="bfs3_gray" target="i3_gray" weight="0.0132051">
+        <attvalues>
+          <attvalue for="0" value="0.0132051"/>
+        </attvalues>
+      </edge>
+      <edge id="162" source="bfs3_gray" target="i4_gray" weight="0.0118211">
+        <attvalues>
+          <attvalue for="0" value="0.0118211"/>
+        </attvalues>
+      </edge>
+      <edge id="163" source="bfs3_gray" target="i5_gray" weight="0.0118291">
+        <attvalues>
+          <attvalue for="0" value="0.0118291"/>
+        </attvalues>
+      </edge>
+      <edge id="164" source="bfs4_gray" target="bfs5_gray" weight="0.0767881">
+        <attvalues>
+          <attvalue for="0" value="0.0767881"/>
+        </attvalues>
+      </edge>
+      <edge id="165" source="bfs4_gray" target="bin1_gray" weight="0.0679183">
+        <attvalues>
+          <attvalue for="0" value="0.0679183"/>
+        </attvalues>
+      </edge>
+      <edge id="166" source="bfs4_gray" target="bin2_gray" weight="0.06658">
+        <attvalues>
+          <attvalue for="0" value="0.06658"/>
+        </attvalues>
+      </edge>
+      <edge id="167" source="bfs4_gray" target="bin3_gray" weight="0.0663445">
+        <attvalues>
+          <attvalue for="0" value="0.0663445"/>
+        </attvalues>
+      </edge>
+      <edge id="168" source="bfs4_gray" target="bin4_gray" weight="0.0710593">
+        <attvalues>
+          <attvalue for="0" value="0.0710593"/>
+        </attvalues>
+      </edge>
+      <edge id="169" source="bfs4_gray" target="bin5_gray" weight="0.0741916">
+        <attvalues>
+          <attvalue for="0" value="0.0741916"/>
+        </attvalues>
+      </edge>
+      <edge id="170" source="bfs4_gray" target="dfs1_gray" weight="0.118782">
+        <attvalues>
+          <attvalue for="0" value="0.118782"/>
+        </attvalues>
+      </edge>
+      <edge id="171" source="bfs4_gray" target="dfs2_gray" weight="0.137574">
+        <attvalues>
+          <attvalue for="0" value="0.137574"/>
+        </attvalues>
+      </edge>
+      <edge id="172" source="bfs4_gray" target="dfs3_gray" weight="0.099381">
+        <attvalues>
+          <attvalue for="0" value="0.099381"/>
+        </attvalues>
+      </edge>
+      <edge id="173" source="bfs4_gray" target="dfs4_gray" weight="0.111257">
+        <attvalues>
+          <attvalue for="0" value="0.111257"/>
+        </attvalues>
+      </edge>
+      <edge id="174" source="bfs4_gray" target="dfs5_gray" weight="0.116381">
+        <attvalues>
+          <attvalue for="0" value="0.116381"/>
+        </attvalues>
+      </edge>
+      <edge id="175" source="bfs4_gray" target="i1_gray" weight="0.0251723">
+        <attvalues>
+          <attvalue for="0" value="0.0251723"/>
+        </attvalues>
+      </edge>
+      <edge id="176" source="bfs4_gray" target="i2_gray" weight="0.0252159">
+        <attvalues>
+          <attvalue for="0" value="0.0252159"/>
+        </attvalues>
+      </edge>
+      <edge id="177" source="bfs4_gray" target="i3_gray" weight="0.0201896">
+        <attvalues>
+          <attvalue for="0" value="0.0201896"/>
+        </attvalues>
+      </edge>
+      <edge id="178" source="bfs4_gray" target="i4_gray" weight="0.0237324">
+        <attvalues>
+          <attvalue for="0" value="0.0237324"/>
+        </attvalues>
+      </edge>
+      <edge id="179" source="bfs4_gray" target="i5_gray" weight="0.0233504">
+        <attvalues>
+          <attvalue for="0" value="0.0233504"/>
+        </attvalues>
+      </edge>
+      <edge id="180" source="bfs5_gray" target="bin1_gray" weight="0.0169044">
+        <attvalues>
+          <attvalue for="0" value="0.0169044"/>
+        </attvalues>
+      </edge>
+      <edge id="181" source="bfs5_gray" target="bin2_gray" weight="0.016494">
+        <attvalues>
+          <attvalue for="0" value="0.016494"/>
+        </attvalues>
+      </edge>
+      <edge id="182" source="bfs5_gray" target="bin3_gray" weight="0.0160285">
+        <attvalues>
+          <attvalue for="0" value="0.0160285"/>
+        </attvalues>
+      </edge>
+      <edge id="183" source="bfs5_gray" target="bin4_gray" weight="0.023943">
+        <attvalues>
+          <attvalue for="0" value="0.023943"/>
+        </attvalues>
+      </edge>
+      <edge id="184" source="bfs5_gray" target="bin5_gray" weight="0.0253813">
+        <attvalues>
+          <attvalue for="0" value="0.0253813"/>
+        </attvalues>
+      </edge>
+      <edge id="185" source="bfs5_gray" target="dfs1_gray" weight="0.0595892">
+        <attvalues>
+          <attvalue for="0" value="0.0595892"/>
+        </attvalues>
+      </edge>
+      <edge id="186" source="bfs5_gray" target="dfs2_gray" weight="0.0703675">
+        <attvalues>
+          <attvalue for="0" value="0.0703675"/>
+        </attvalues>
+      </edge>
+      <edge id="187" source="bfs5_gray" target="dfs3_gray" weight="0.116906">
+        <attvalues>
+          <attvalue for="0" value="0.116906"/>
+        </attvalues>
+      </edge>
+      <edge id="188" source="bfs5_gray" target="dfs4_gray" weight="0.0602812">
+        <attvalues>
+          <attvalue for="0" value="0.0602812"/>
+        </attvalues>
+      </edge>
+      <edge id="189" source="bfs5_gray" target="dfs5_gray" weight="0.0811573">
+        <attvalues>
+          <attvalue for="0" value="0.0811573"/>
+        </attvalues>
+      </edge>
+      <edge id="190" source="bfs5_gray" target="i1_gray" weight="0.00852728">
+        <attvalues>
+          <attvalue for="0" value="0.00852728"/>
+        </attvalues>
+      </edge>
+      <edge id="191" source="bfs5_gray" target="i2_gray" weight="0.00906196">
+        <attvalues>
+          <attvalue for="0" value="0.00906196"/>
+        </attvalues>
+      </edge>
+      <edge id="192" source="bfs5_gray" target="i3_gray" weight="0.0104379">
+        <attvalues>
+          <attvalue for="0" value="0.0104379"/>
+        </attvalues>
+      </edge>
+      <edge id="193" source="bfs5_gray" target="i4_gray" weight="0.00789316">
+        <attvalues>
+          <attvalue for="0" value="0.00789316"/>
+        </attvalues>
+      </edge>
+      <edge id="194" source="bfs5_gray" target="i5_gray" weight="0.00712532">
+        <attvalues>
+          <attvalue for="0" value="0.00712532"/>
+        </attvalues>
+      </edge>
+      <edge id="195" source="bin1_gray" target="bin2_gray" weight="0.862846">
+        <attvalues>
+          <attvalue for="0" value="0.862846"/>
+        </attvalues>
+      </edge>
+      <edge id="196" source="bin1_gray" target="bin3_gray" weight="0.726531">
+        <attvalues>
+          <attvalue for="0" value="0.726531"/>
+        </attvalues>
+      </edge>
+      <edge id="197" source="bin1_gray" target="bin4_gray" weight="0.283617">
+        <attvalues>
+          <attvalue for="0" value="0.283617"/>
+        </attvalues>
+      </edge>
+      <edge id="198" source="bin1_gray" target="bin5_gray" weight="0.136526">
+        <attvalues>
+          <attvalue for="0" value="0.136526"/>
+        </attvalues>
+      </edge>
+      <edge id="199" source="bin1_gray" target="dfs1_gray" weight="0.0733016">
+        <attvalues>
+          <attvalue for="0" value="0.0733016"/>
+        </attvalues>
+      </edge>
+      <edge id="200" source="bin1_gray" target="dfs2_gray" weight="0.0570054">
+        <attvalues>
+          <attvalue for="0" value="0.0570054"/>
+        </attvalues>
+      </edge>
+      <edge id="201" source="bin1_gray" target="dfs3_gray" weight="0.0297721">
+        <attvalues>
+          <attvalue for="0" value="0.0297721"/>
+        </attvalues>
+      </edge>
+      <edge id="202" source="bin1_gray" target="dfs4_gray" weight="0.0727135">
+        <attvalues>
+          <attvalue for="0" value="0.0727135"/>
+        </attvalues>
+      </edge>
+      <edge id="203" source="bin1_gray" target="dfs5_gray" weight="0.058634">
+        <attvalues>
+          <attvalue for="0" value="0.058634"/>
+        </attvalues>
+      </edge>
+      <edge id="204" source="bin1_gray" target="i1_gray" weight="0.0252071">
+        <attvalues>
+          <attvalue for="0" value="0.0252071"/>
+        </attvalues>
+      </edge>
+      <edge id="205" source="bin1_gray" target="i2_gray" weight="0.0252233">
+        <attvalues>
+          <attvalue for="0" value="0.0252233"/>
+        </attvalues>
+      </edge>
+      <edge id="206" source="bin1_gray" target="i3_gray" weight="0.0229837">
+        <attvalues>
+          <attvalue for="0" value="0.0229837"/>
+        </attvalues>
+      </edge>
+      <edge id="207" source="bin1_gray" target="i4_gray" weight="0.0252926">
+        <attvalues>
+          <attvalue for="0" value="0.0252926"/>
+        </attvalues>
+      </edge>
+      <edge id="208" source="bin1_gray" target="i5_gray" weight="0.0248274">
+        <attvalues>
+          <attvalue for="0" value="0.0248274"/>
+        </attvalues>
+      </edge>
+      <edge id="209" source="bin2_gray" target="bin3_gray" weight="0.667037">
+        <attvalues>
+          <attvalue for="0" value="0.667037"/>
+        </attvalues>
+      </edge>
+      <edge id="210" source="bin2_gray" target="bin4_gray" weight="0.228817">
+        <attvalues>
+          <attvalue for="0" value="0.228817"/>
+        </attvalues>
+      </edge>
+      <edge id="211" source="bin2_gray" target="bin5_gray" weight="0.133289">
+        <attvalues>
+          <attvalue for="0" value="0.133289"/>
+        </attvalues>
+      </edge>
+      <edge id="212" source="bin2_gray" target="dfs1_gray" weight="0.0743084">
+        <attvalues>
+          <attvalue for="0" value="0.0743084"/>
+        </attvalues>
+      </edge>
+      <edge id="213" source="bin2_gray" target="dfs2_gray" weight="0.0541862">
+        <attvalues>
+          <attvalue for="0" value="0.0541862"/>
+        </attvalues>
+      </edge>
+      <edge id="214" source="bin2_gray" target="dfs3_gray" weight="0.030992">
+        <attvalues>
+          <attvalue for="0" value="0.030992"/>
+        </attvalues>
+      </edge>
+      <edge id="215" source="bin2_gray" target="dfs4_gray" weight="0.0731394">
+        <attvalues>
+          <attvalue for="0" value="0.0731394"/>
+        </attvalues>
+      </edge>
+      <edge id="216" source="bin2_gray" target="dfs5_gray" weight="0.05815">
+        <attvalues>
+          <attvalue for="0" value="0.05815"/>
+        </attvalues>
+      </edge>
+      <edge id="217" source="bin2_gray" target="i1_gray" weight="0.0257267">
+        <attvalues>
+          <attvalue for="0" value="0.0257267"/>
+        </attvalues>
+      </edge>
+      <edge id="218" source="bin2_gray" target="i2_gray" weight="0.0257433">
+        <attvalues>
+          <attvalue for="0" value="0.0257433"/>
+        </attvalues>
+      </edge>
+      <edge id="219" source="bin2_gray" target="i3_gray" weight="0.0234079">
+        <attvalues>
+          <attvalue for="0" value="0.0234079"/>
+        </attvalues>
+      </edge>
+      <edge id="220" source="bin2_gray" target="i4_gray" weight="0.0258139">
+        <attvalues>
+          <attvalue for="0" value="0.0258139"/>
+        </attvalues>
+      </edge>
+      <edge id="221" source="bin2_gray" target="i5_gray" weight="0.0257207">
+        <attvalues>
+          <attvalue for="0" value="0.0257207"/>
+        </attvalues>
+      </edge>
+      <edge id="222" source="bin3_gray" target="bin4_gray" weight="0.222119">
+        <attvalues>
+          <attvalue for="0" value="0.222119"/>
+        </attvalues>
+      </edge>
+      <edge id="223" source="bin3_gray" target="bin5_gray" weight="0.121617">
+        <attvalues>
+          <attvalue for="0" value="0.121617"/>
+        </attvalues>
+      </edge>
+      <edge id="224" source="bin3_gray" target="dfs1_gray" weight="0.0697834">
+        <attvalues>
+          <attvalue for="0" value="0.0697834"/>
+        </attvalues>
+      </edge>
+      <edge id="225" source="bin3_gray" target="dfs2_gray" weight="0.0566884">
+        <attvalues>
+          <attvalue for="0" value="0.0566884"/>
+        </attvalues>
+      </edge>
+      <edge id="226" source="bin3_gray" target="dfs3_gray" weight="0.032422">
+        <attvalues>
+          <attvalue for="0" value="0.032422"/>
+        </attvalues>
+      </edge>
+      <edge id="227" source="bin3_gray" target="dfs4_gray" weight="0.0699656">
+        <attvalues>
+          <attvalue for="0" value="0.0699656"/>
+        </attvalues>
+      </edge>
+      <edge id="228" source="bin3_gray" target="dfs5_gray" weight="0.0560597">
+        <attvalues>
+          <attvalue for="0" value="0.0560597"/>
+        </attvalues>
+      </edge>
+      <edge id="229" source="bin3_gray" target="i1_gray" weight="0.0273298">
+        <attvalues>
+          <attvalue for="0" value="0.0273298"/>
+        </attvalues>
+      </edge>
+      <edge id="230" source="bin3_gray" target="i2_gray" weight="0.0257727">
+        <attvalues>
+          <attvalue for="0" value="0.0257727"/>
+        </attvalues>
+      </edge>
+      <edge id="231" source="bin3_gray" target="i3_gray" weight="0.0222298">
+        <attvalues>
+          <attvalue for="0" value="0.0222298"/>
+        </attvalues>
+      </edge>
+      <edge id="232" source="bin3_gray" target="i4_gray" weight="0.0274178">
+        <attvalues>
+          <attvalue for="0" value="0.0274178"/>
+        </attvalues>
+      </edge>
+      <edge id="233" source="bin3_gray" target="i5_gray" weight="0.0269771">
+        <attvalues>
+          <attvalue for="0" value="0.0269771"/>
+        </attvalues>
+      </edge>
+      <edge id="234" source="bin4_gray" target="bin5_gray" weight="0.535845">
+        <attvalues>
+          <attvalue for="0" value="0.535845"/>
+        </attvalues>
+      </edge>
+      <edge id="235" source="bin4_gray" target="dfs1_gray" weight="0.0696901">
+        <attvalues>
+          <attvalue for="0" value="0.0696901"/>
+        </attvalues>
+      </edge>
+      <edge id="236" source="bin4_gray" target="dfs2_gray" weight="0.0647396">
+        <attvalues>
+          <attvalue for="0" value="0.0647396"/>
+        </attvalues>
+      </edge>
+      <edge id="237" source="bin4_gray" target="dfs3_gray" weight="0.0341324">
+        <attvalues>
+          <attvalue for="0" value="0.0341324"/>
+        </attvalues>
+      </edge>
+      <edge id="238" source="bin4_gray" target="dfs4_gray" weight="0.066896">
+        <attvalues>
+          <attvalue for="0" value="0.066896"/>
+        </attvalues>
+      </edge>
+      <edge id="239" source="bin4_gray" target="dfs5_gray" weight="0.054485">
+        <attvalues>
+          <attvalue for="0" value="0.054485"/>
+        </attvalues>
+      </edge>
+      <edge id="240" source="bin4_gray" target="i1_gray" weight="0.0264273">
+        <attvalues>
+          <attvalue for="0" value="0.0264273"/>
+        </attvalues>
+      </edge>
+      <edge id="241" source="bin4_gray" target="i2_gray" weight="0.0264435">
+        <attvalues>
+          <attvalue for="0" value="0.0264435"/>
+        </attvalues>
+      </edge>
+      <edge id="242" source="bin4_gray" target="i3_gray" weight="0.0219392">
+        <attvalues>
+          <attvalue for="0" value="0.0219392"/>
+        </attvalues>
+      </edge>
+      <edge id="243" source="bin4_gray" target="i4_gray" weight="0.0265123">
+        <attvalues>
+          <attvalue for="0" value="0.0265123"/>
+        </attvalues>
+      </edge>
+      <edge id="244" source="bin4_gray" target="i5_gray" weight="0.0260715">
+        <attvalues>
+          <attvalue for="0" value="0.0260715"/>
+        </attvalues>
+      </edge>
+      <edge id="245" source="bin5_gray" target="dfs1_gray" weight="0.0760991">
+        <attvalues>
+          <attvalue for="0" value="0.0760991"/>
+        </attvalues>
+      </edge>
+      <edge id="246" source="bin5_gray" target="dfs2_gray" weight="0.0639509">
+        <attvalues>
+          <attvalue for="0" value="0.0639509"/>
+        </attvalues>
+      </edge>
+      <edge id="247" source="bin5_gray" target="dfs3_gray" weight="0.0389774">
+        <attvalues>
+          <attvalue for="0" value="0.0389774"/>
+        </attvalues>
+      </edge>
+      <edge id="248" source="bin5_gray" target="dfs4_gray" weight="0.0737564">
+        <attvalues>
+          <attvalue for="0" value="0.0737564"/>
+        </attvalues>
+      </edge>
+      <edge id="249" source="bin5_gray" target="dfs5_gray" weight="0.0573105">
+        <attvalues>
+          <attvalue for="0" value="0.0573105"/>
+        </attvalues>
+      </edge>
+      <edge id="250" source="bin5_gray" target="i1_gray" weight="0.0283314">
+        <attvalues>
+          <attvalue for="0" value="0.0283314"/>
+        </attvalues>
+      </edge>
+      <edge id="251" source="bin5_gray" target="i2_gray" weight="0.0283495">
+        <attvalues>
+          <attvalue for="0" value="0.0283495"/>
+        </attvalues>
+      </edge>
+      <edge id="252" source="bin5_gray" target="i3_gray" weight="0.023024">
+        <attvalues>
+          <attvalue for="0" value="0.023024"/>
+        </attvalues>
+      </edge>
+      <edge id="253" source="bin5_gray" target="i4_gray" weight="0.0284267">
+        <attvalues>
+          <attvalue for="0" value="0.0284267"/>
+        </attvalues>
+      </edge>
+      <edge id="254" source="bin5_gray" target="i5_gray" weight="0.0291735">
+        <attvalues>
+          <attvalue for="0" value="0.0291735"/>
+        </attvalues>
+      </edge>
+      <edge id="255" source="dfs1_gray" target="dfs2_gray" weight="0.177749">
+        <attvalues>
+          <attvalue for="0" value="0.177749"/>
+        </attvalues>
+      </edge>
+      <edge id="256" source="dfs1_gray" target="dfs3_gray" weight="0.0831255">
+        <attvalues>
+          <attvalue for="0" value="0.0831255"/>
+        </attvalues>
+      </edge>
+      <edge id="257" source="dfs1_gray" target="dfs4_gray" weight="0.772508">
+        <attvalues>
+          <attvalue for="0" value="0.772508"/>
+        </attvalues>
+      </edge>
+      <edge id="258" source="dfs1_gray" target="dfs5_gray" weight="0.137682">
+        <attvalues>
+          <attvalue for="0" value="0.137682"/>
+        </attvalues>
+      </edge>
+      <edge id="259" source="dfs1_gray" target="i1_gray" weight="0.0259695">
+        <attvalues>
+          <attvalue for="0" value="0.0259695"/>
+        </attvalues>
+      </edge>
+      <edge id="260" source="dfs1_gray" target="i2_gray" weight="0.0260874">
+        <attvalues>
+          <attvalue for="0" value="0.0260874"/>
+        </attvalues>
+      </edge>
+      <edge id="261" source="dfs1_gray" target="i3_gray" weight="0.0291189">
+        <attvalues>
+          <attvalue for="0" value="0.0291189"/>
+        </attvalues>
+      </edge>
+      <edge id="262" source="dfs1_gray" target="i4_gray" weight="0.0250659">
+        <attvalues>
+          <attvalue for="0" value="0.0250659"/>
+        </attvalues>
+      </edge>
+      <edge id="263" source="dfs1_gray" target="i5_gray" weight="0.0246907">
+        <attvalues>
+          <attvalue for="0" value="0.0246907"/>
+        </attvalues>
+      </edge>
+      <edge id="264" source="dfs2_gray" target="dfs3_gray" weight="0.115103">
+        <attvalues>
+          <attvalue for="0" value="0.115103"/>
+        </attvalues>
+      </edge>
+      <edge id="265" source="dfs2_gray" target="dfs4_gray" weight="0.180272">
+        <attvalues>
+          <attvalue for="0" value="0.180272"/>
+        </attvalues>
+      </edge>
+      <edge id="266" source="dfs2_gray" target="dfs5_gray" weight="0.43046">
+        <attvalues>
+          <attvalue for="0" value="0.43046"/>
+        </attvalues>
+      </edge>
+      <edge id="267" source="dfs2_gray" target="i1_gray" weight="0.0204805">
+        <attvalues>
+          <attvalue for="0" value="0.0204805"/>
+        </attvalues>
+      </edge>
+      <edge id="268" source="dfs2_gray" target="i2_gray" weight="0.0210701">
+        <attvalues>
+          <attvalue for="0" value="0.0210701"/>
+        </attvalues>
+      </edge>
+      <edge id="269" source="dfs2_gray" target="i3_gray" weight="0.0211909">
+        <attvalues>
+          <attvalue for="0" value="0.0211909"/>
+        </attvalues>
+      </edge>
+      <edge id="270" source="dfs2_gray" target="i4_gray" weight="0.0197242">
+        <attvalues>
+          <attvalue for="0" value="0.0197242"/>
+        </attvalues>
+      </edge>
+      <edge id="271" source="dfs2_gray" target="i5_gray" weight="0.01995">
+        <attvalues>
+          <attvalue for="0" value="0.01995"/>
+        </attvalues>
+      </edge>
+      <edge id="272" source="dfs3_gray" target="dfs4_gray" weight="0.0809097">
+        <attvalues>
+          <attvalue for="0" value="0.0809097"/>
+        </attvalues>
+      </edge>
+      <edge id="273" source="dfs3_gray" target="dfs5_gray" weight="0.111728">
+        <attvalues>
+          <attvalue for="0" value="0.111728"/>
+        </attvalues>
+      </edge>
+      <edge id="274" source="dfs3_gray" target="i1_gray" weight="0.0193005">
+        <attvalues>
+          <attvalue for="0" value="0.0193005"/>
+        </attvalues>
+      </edge>
+      <edge id="275" source="dfs3_gray" target="i2_gray" weight="0.0185568">
+        <attvalues>
+          <attvalue for="0" value="0.0185568"/>
+        </attvalues>
+      </edge>
+      <edge id="276" source="dfs3_gray" target="i3_gray" weight="0.0147516">
+        <attvalues>
+          <attvalue for="0" value="0.0147516"/>
+        </attvalues>
+      </edge>
+      <edge id="277" source="dfs3_gray" target="i4_gray" weight="0.0189554">
+        <attvalues>
+          <attvalue for="0" value="0.0189554"/>
+        </attvalues>
+      </edge>
+      <edge id="278" source="dfs3_gray" target="i5_gray" weight="0.0186176">
+        <attvalues>
+          <attvalue for="0" value="0.0186176"/>
+        </attvalues>
+      </edge>
+      <edge id="279" source="dfs4_gray" target="dfs5_gray" weight="0.13103">
+        <attvalues>
+          <attvalue for="0" value="0.13103"/>
+        </attvalues>
+      </edge>
+      <edge id="280" source="dfs4_gray" target="i1_gray" weight="0.0244788">
+        <attvalues>
+          <attvalue for="0" value="0.0244788"/>
+        </attvalues>
+      </edge>
+      <edge id="281" source="dfs4_gray" target="i2_gray" weight="0.024592">
+        <attvalues>
+          <attvalue for="0" value="0.024592"/>
+        </attvalues>
+      </edge>
+      <edge id="282" source="dfs4_gray" target="i3_gray" weight="0.0257279">
+        <attvalues>
+          <attvalue for="0" value="0.0257279"/>
+        </attvalues>
+      </edge>
+      <edge id="283" source="dfs4_gray" target="i4_gray" weight="0.0236011">
+        <attvalues>
+          <attvalue for="0" value="0.0236011"/>
+        </attvalues>
+      </edge>
+      <edge id="284" source="dfs4_gray" target="i5_gray" weight="0.0232373">
+        <attvalues>
+          <attvalue for="0" value="0.0232373"/>
+        </attvalues>
+      </edge>
+      <edge id="285" source="dfs5_gray" target="i1_gray" weight="0.0147995">
+        <attvalues>
+          <attvalue for="0" value="0.0147995"/>
+        </attvalues>
+      </edge>
+      <edge id="286" source="dfs5_gray" target="i2_gray" weight="0.0148071">
+        <attvalues>
+          <attvalue for="0" value="0.0148071"/>
+        </attvalues>
+      </edge>
+      <edge id="287" source="dfs5_gray" target="i3_gray" weight="0.0144921">
+        <attvalues>
+          <attvalue for="0" value="0.0144921"/>
+        </attvalues>
+      </edge>
+      <edge id="288" source="dfs5_gray" target="i4_gray" weight="0.0139651">
+        <attvalues>
+          <attvalue for="0" value="0.0139651"/>
+        </attvalues>
+      </edge>
+      <edge id="289" source="dfs5_gray" target="i5_gray" weight="0.0138221">
+        <attvalues>
+          <attvalue for="0" value="0.0138221"/>
+        </attvalues>
+      </edge>
+      <edge id="290" source="i1_gray" target="i2_gray" weight="0.850291">
+        <attvalues>
+          <attvalue for="0" value="0.850291"/>
+        </attvalues>
+      </edge>
+      <edge id="291" source="i1_gray" target="i3_gray" weight="0.130315">
+        <attvalues>
+          <attvalue for="0" value="0.130315"/>
+        </attvalues>
+      </edge>
+      <edge id="292" source="i1_gray" target="i4_gray" weight="0.895446">
+        <attvalues>
+          <attvalue for="0" value="0.895446"/>
+        </attvalues>
+      </edge>
+      <edge id="293" source="i1_gray" target="i5_gray" weight="0.867977">
+        <attvalues>
+          <attvalue for="0" value="0.867977"/>
+        </attvalues>
+      </edge>
+      <edge id="294" source="i2_gray" target="i3_gray" weight="0.130408">
+        <attvalues>
+          <attvalue for="0" value="0.130408"/>
+        </attvalues>
+      </edge>
+      <edge id="295" source="i2_gray" target="i4_gray" weight="0.840113">
+        <attvalues>
+          <attvalue for="0" value="0.840113"/>
+        </attvalues>
+      </edge>
+      <edge id="296" source="i2_gray" target="i5_gray" weight="0.780196">
+        <attvalues>
+          <attvalue for="0" value="0.780196"/>
+        </attvalues>
+      </edge>
+      <edge id="297" source="i3_gray" target="i4_gray" weight="0.114569">
+        <attvalues>
+          <attvalue for="0" value="0.114569"/>
+        </attvalues>
+      </edge>
+      <edge id="298" source="i3_gray" target="i5_gray" weight="0.112276">
+        <attvalues>
+          <attvalue for="0" value="0.112276"/>
+        </attvalues>
+      </edge>
+      <edge id="299" source="i4_gray" target="i5_gray" weight="0.87636">
+        <attvalues>
+          <attvalue for="0" value="0.87636"/>
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>
