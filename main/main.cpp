@@ -31,7 +31,7 @@ using namespace std;
 #define GRAPH_JSON_JACCARD "jaccard_graph.gexf"
 #define GRAPH_JSON_PHASH "pHash_graph.gexf"
 #define GRAPH_JSON_EMD "emd_graph.gexf"
-#define KERNEL_RADIUS 10
+#define KERNEL_RADIUS 20
 #define SIGMA 1.0
 #define HASH_WIDTH 8
 #define HASH_HEIGHT 8
