@@ -5,6 +5,7 @@
 #include <cmath>
 #include <string>
 #include <algorithm>
+#include <cstdlib>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -43,6 +44,95 @@ std::vector<std::vector<double>> dct(const std::vector<std::vector<uint8_t>>& so
     return out;
 }
 
+std::string dctImagePath(const std::string& sourceFileName)
+{
+    std::string outputPath = "..\\dctImages\\";
+    int start = 0;
+    int end = (int)sourceFileName.size();
+
+    for (int i = (int)sourceFileName.size() - 1; i >= 0; i--)
+    {
+        if (sourceFileName[i] == '\\' || sourceFileName[i] == '/')
+        {
+            start = i + 1;
+            break;
+        }
+    }
+
+    for (int i = (int)sourceFileName.size() - 1; i >= start; i--)
+    {
+        if (sourceFileName[i] == '.')
+        {
+            end = i;
+            break;
+        }
+    }
+
+    for (int i = start; i < end; i++)
+    {
+        outputPath.push_back(sourceFileName[i]);
+    }
+
+    outputPath += "_dct.bmp";
+    return outputPath;
+}
+
+void dctImageGeneration(const std::vector<std::vector<double>>& dctPixelValues, const std::string& sourceFileName)
+{
+    if (dctPixelValues.empty() || dctPixelValues[0].empty())
+    {
+        return;
+    }
+
+    int height = (int)dctPixelValues.size();
+    int width = (int)dctPixelValues[0].size();
+
+    double minValue = dctPixelValues[0][0];
+    double maxValue = dctPixelValues[0][0];
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            if (dctPixelValues[i][j] < minValue) minValue = dctPixelValues[i][j];
+            if (dctPixelValues[i][j] > maxValue) maxValue = dctPixelValues[i][j];
+        }
+    }
+
+    double range = maxValue - minValue;
+    BMP dctImage(width, height, false);
+    std::vector<uint8_t> pixels;
+    pixels.reserve(height * width * 3);
+
+    for (int i = height - 1; i >= 0; i--)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            double grayValue = 0.0;
+            if (range != 0.0)
+            {
+                grayValue = ((dctPixelValues[i][j] - minValue) * 255.0) / range;
+            }
+
+            if (grayValue < 0.0) grayValue = 0.0;
+            if (grayValue > 255.0) grayValue = 255.0;
+
+            uint8_t gray = (uint8_t)std::round(grayValue);
+
+            pixels.push_back(gray);
+            pixels.push_back(gray);
+            pixels.push_back(gray);
+        }
+    }
+
+    dctImage.data = pixels;
+
+    system("if not exist ..\\dctImages mkdir ..\\dctImages");
+
+    std::string outputPath = dctImagePath(sourceFileName);
+    dctImage.write(outputPath.c_str());
+}
+
 std::string generateHash(BMP source, int k, int l)
 {
     int height = source.bmpInfoHeader.height;
@@ -50,6 +140,7 @@ std::string generateHash(BMP source, int k, int l)
 
     std::vector<std::vector<uint8_t>> pixelValues = pixelVectorGenerator(source, width, height);
     std::vector<std::vector<double>> dctPixelValues = dct(pixelValues);
+    dctImageGeneration(dctPixelValues, source.fileName);
 
     k = std::min(k, (int)dctPixelValues.size());
     l = std::min(l, (int)dctPixelValues[0].size());

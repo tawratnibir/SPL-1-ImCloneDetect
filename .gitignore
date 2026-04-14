@@ -45,6 +45,7 @@ backupImages/
 outputGrayBlur/
 randomImages/
 graphJson/
+dctImages/
 inputImages2/
 # IDE and editor files
 .DS_Store
