@@ -4,6 +4,7 @@
 #include "../headers/pHash.h"
 #include "../headers/emd.h"
 #include "../headers/formatter.h"
+#include <cmath>
 #include <cctype>
 #include <filesystem>
 #include <fstream>
@@ -23,9 +24,6 @@ using namespace std;
 #define JACCARD_CSV "jaccard.csv"
 #define P_HASH_CSV "pHash.csv"
 #define EMD_CSV "emd.csv"
-#define JACCARD_WEIGHT 0.20
-#define PHASH_WEIGHT 0.40
-#define EMD_WEIGHT 0.40
 #define OVERALL_CSV "overall.csv"
 #define GRAPH_JSON_DIR "../graphFiles/"
 #define GRAPH_JSON_OVERALL "overall_graph.gexf"
@@ -40,6 +38,14 @@ using namespace std;
 #define P_HASH_WIDTH 32
 #define SINGLE_PAIR_CSV "singlePairSimilarity.csv"
 #define PROGRESS_BAR_WIDTH 40
+
+constexpr double DEFAULT_JACCARD_WEIGHT = 0.20;
+constexpr double DEFAULT_PHASH_WEIGHT = 0.40;
+constexpr double DEFAULT_EMD_WEIGHT = 0.40;
+double jaccardWeight = DEFAULT_JACCARD_WEIGHT;
+double pHashWeight = DEFAULT_PHASH_WEIGHT;
+double emdWeight = DEFAULT_EMD_WEIGHT;
+
 void ensureDirectoryExists(const string &path)
 {
     std::filesystem::create_directories(path);
@@ -83,6 +89,20 @@ void printSimilarityResults(const vector<filePairSimilarity> &filePairs)
         cout << pair.file1 << ", " << pair.file2 << ", "
              << fixed << setprecision(6) << pair.similarity << endl;
     }
+
+    cout.flags(previousFlags);
+    cout.precision(previousPrecision);
+}
+
+void printWeightSummary(double jaccardValue, double pHashValue, double emdValue)
+{
+    ios::fmtflags previousFlags = cout.flags();
+    streamsize previousPrecision = cout.precision();
+
+    cout << fixed << setprecision(4);
+    cout << "  Jaccard: " << jaccardValue << endl;
+    cout << "  pHash:   " << pHashValue << endl;
+    cout << "  EMD:     " << emdValue << endl;
 
     cout.flags(previousFlags);
     cout.precision(previousPrecision);
@@ -228,7 +248,7 @@ void singlePairSimGen(string file1, string file2)
         
         double jaccardScore = jaccardDistance(grayImageOne, grayImageTwo);
         double pHashScore = pHash(hashOne, hashTwo);
-        double overall = JACCARD_WEIGHT * jaccardScore + PHASH_WEIGHT * pHashScore + EMD_WEIGHT * emdScore;
+        double overall = jaccardWeight * jaccardScore + pHashWeight * pHashScore + emdWeight * emdScore;
         cout << "Overall Similarity: " << overall << endl;
         
         vector<filePairSimilarity> fileSim(4);
@@ -429,9 +449,9 @@ void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
     vector<filePairSimilarity> filePairs(totalPairs);
     for (int i = 0; i < totalPairs; i++)
     {
-        double overall = JACCARD_WEIGHT * jaccardPairs[i].similarity
-                       + PHASH_WEIGHT * pHashPairs[i].similarity
-                       + EMD_WEIGHT * emdPairs[i].similarity;
+        double overall = jaccardWeight * jaccardPairs[i].similarity
+                       + pHashWeight * pHashPairs[i].similarity
+                       + emdWeight * emdPairs[i].similarity;
 
         filePairs[i].file1 = emdPairs[i].file1;
         filePairs[i].file2 = emdPairs[i].file2;
@@ -516,6 +536,100 @@ bool isBackCommand(const string &input)
     }
 
     return normalized == "back" || normalized == "b";
+}
+
+bool tryParseWeightInput(const string &input, double &value)
+{
+    try
+    {
+        size_t processedCharacters = 0;
+        value = stod(input, &processedCharacters);
+        if (processedCharacters != input.size())
+        {
+            return false;
+        }
+    }
+    catch (const exception &)
+    {
+        return false;
+    }
+
+    return value > 0.0 && value < 1.0;
+}
+
+bool promptForWeightValue(const string &label, double &value)
+{
+    while (true)
+    {
+        cout << label << " weight (0 < value < 1.0): ";
+
+        string input;
+        getline(cin, input);
+        input = normalizePathInput(input);
+
+        if (isBackCommand(input))
+        {
+            return false;
+        }
+
+        if (tryParseWeightInput(input, value))
+        {
+            return true;
+        }
+
+        cout << "Enter a numeric value strictly between 0 and 1.0, or type 'back' to cancel." << endl;
+    }
+}
+
+void configureAlgorithmWeights()
+{
+    while (true)
+    {
+        cout << "\n--- Configure Algorithm Weights ---" << endl;
+        cout << "Default weights:" << endl;
+        printWeightSummary(DEFAULT_JACCARD_WEIGHT, DEFAULT_PHASH_WEIGHT, DEFAULT_EMD_WEIGHT);
+        cout << "Current weights:" << endl;
+        printWeightSummary(jaccardWeight, pHashWeight, emdWeight);
+        cout << "The three weights must each be between 0 and 1.0 and must add up to 1.0." << endl;
+        cout << "Type 'back' at any prompt to return without changing weights." << endl;
+
+        double newJaccardWeight = 0.0;
+        double newPHashWeight = 0.0;
+        double newEmdWeight = 0.0;
+
+        if (!promptForWeightValue("Jaccard", newJaccardWeight) ||
+            !promptForWeightValue("pHash", newPHashWeight) ||
+            !promptForWeightValue("EMD", newEmdWeight))
+        {
+            cout << "Returning to the main menu without changing weights." << endl;
+            return;
+        }
+
+        double totalWeight = newJaccardWeight + newPHashWeight + newEmdWeight;
+        if (std::fabs(totalWeight - 1.0) > 1e-9)
+        {
+            ios::fmtflags previousFlags = cout.flags();
+            streamsize previousPrecision = cout.precision();
+
+            cout << fixed << setprecision(6);
+            cout << "The three weights must add up to 1.0. Current total: " << totalWeight << endl;
+
+            cout.flags(previousFlags);
+            cout.precision(previousPrecision);
+
+            cout << "Please enter the weights again, or type 'back' to cancel." << endl;
+            continue;
+        }
+
+        jaccardWeight = newJaccardWeight;
+        pHashWeight = newPHashWeight;
+        emdWeight = newEmdWeight;
+
+        cout << "Algorithm weights updated successfully." << endl;
+        cout << "New weights:" << endl;
+        printWeightSummary(jaccardWeight, pHashWeight, emdWeight);
+        return;
+    }
 }
 
 bool isBmpPath(const std::filesystem::path &path)
@@ -604,13 +718,26 @@ int main()
         cout << "Press 1: Find pairwise similarity on a folder" << endl;
         cout << "Press 2: Find similarity of two images" << endl;
         cout << "Press 3: Format a file or folder (full path required)" << endl;
-        cout << "Press 4: Exit" << endl;
+        cout << "Press 4: Configure algorithm weights" << endl;
+        {
+            ios::fmtflags previousFlags = cout.flags();
+            streamsize previousPrecision = cout.precision();
+
+            cout << fixed << setprecision(2);
+            cout << "Current weights: Jaccard = " << jaccardWeight
+                 << ", pHash = " << pHashWeight
+                 << ", EMD = " << emdWeight << endl;
+
+            cout.flags(previousFlags);
+            cout.precision(previousPrecision);
+        }
+        cout << "Press 5: Exit" << endl;
         cout << "Enter your choice: ";
         if (!(cin >> choice))
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid choice. Please enter a number from 1 to 4." << endl;
+            cout << "Invalid choice. Please enter a number from 1 to 5." << endl;
             continue;
         }
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -754,6 +881,9 @@ int main()
             runFormatterFromMenu();
             break;
         case 4:
+            configureAlgorithmWeights();
+            break;
+        case 5:
             cout << "\nThank you for using ImCloneDetect!" << endl;
             cout << "Exiting..." << endl;
             break;
@@ -761,5 +891,5 @@ int main()
             cout << "Invalid choice. Please try again." << endl;
             break;
         }
-    } while (choice != 4);
+    } while (choice != 5);
 }
