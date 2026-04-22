@@ -7,6 +7,7 @@
 #include <cctype>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -70,6 +71,23 @@ struct filePairSimilarity
     string file2;
     double similarity;
 };
+
+void printSimilarityResults(const vector<filePairSimilarity> &filePairs)
+{
+    ios::fmtflags previousFlags = cout.flags();
+    streamsize previousPrecision = cout.precision();
+
+    cout << TITLE << endl;
+    for (const auto &pair : filePairs)
+    {
+        cout << pair.file1 << ", " << pair.file2 << ", "
+             << fixed << setprecision(6) << pair.similarity << endl;
+    }
+
+    cout.flags(previousFlags);
+    cout.precision(previousPrecision);
+}
+
 string fileNameTrimmer(string fileName, string type, string extension)
 {
     int n = fileName.size();
@@ -426,6 +444,10 @@ void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
     generateGraphJson(jaccardPairs, GRAPH_JSON_JACCARD);
     generateGraphJson(pHashPairs, GRAPH_JSON_PHASH);
     generateGraphJson(emdPairs, GRAPH_JSON_EMD);
+
+    cout << "\nAll CSV generations are complete." << endl;
+    cout << "Displaying " << OVERALL_CSV << " contents:" << endl;
+    printSimilarityResults(filePairs);
 }
 vector<string> getImagesFromDirectory(const string &path)
 {

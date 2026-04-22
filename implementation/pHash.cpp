@@ -1,6 +1,7 @@
 #include "../headers/BMP.h"
 #include "../headers/Normalizer.h"
 #include "../headers/jaccard.h"
+#include "../headers/pHash.h"
 #include <vector>
 #include <cmath>
 #include <string>
