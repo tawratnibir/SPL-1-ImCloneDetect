@@ -459,15 +459,15 @@ void overallScoreCalculator(vector<filePairSimilarity> &jaccardPairs,
 
         printProgressBar("Overall", i + 1, totalPairs);
     }
+    cout << "\nAll CSV generations are complete." << endl;
+    cout << "Displaying " << OVERALL_CSV << " contents:" << endl;
+    printSimilarityResults(filePairs);
     writeToCsv(OVERALL_CSV, filePairs);
     generateGraphJson(filePairs, GRAPH_JSON_OVERALL);
     generateGraphJson(jaccardPairs, GRAPH_JSON_JACCARD);
     generateGraphJson(pHashPairs, GRAPH_JSON_PHASH);
     generateGraphJson(emdPairs, GRAPH_JSON_EMD);
 
-    cout << "\nAll CSV generations are complete." << endl;
-    cout << "Displaying " << OVERALL_CSV << " contents:" << endl;
-    printSimilarityResults(filePairs);
 }
 vector<string> getImagesFromDirectory(const string &path)
 {

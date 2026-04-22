@@ -2,7 +2,9 @@
 using namespace std;
 
 int main() {
-  int a = 5;
-  int b = 6;
-  cout << a + b << endl;
+  for (int i = 1; i <= 10; ++i) {
+
+    cout << i << endl;
+    cout << "This is the end!!!" << endl;
+  }
 }
