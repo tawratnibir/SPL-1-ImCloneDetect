@@ -234,6 +234,12 @@ Total C++ source/header LOC: `1,891`
 
 The project is configured for Windows and MSVC. These requirements apply when building from source. Users who run the already-compiled `main/main.exe` do not need the full Visual Studio compiler toolchain.
 
+## Platform Support
+
+The current project distribution supports Windows 10/11 x64. The provided executable is `main/main.exe`, and the helper scripts are Windows batch files (`setup.bat` and `run.bat`).
+
+Linux is not currently supported by the provided build scripts or prebuilt executable. A Linux port is possible because most of the image-processing logic is written in C++, but it would require a Linux build configuration, Linux-compatible OR-Tools binaries, and replacement of Windows-specific shell commands and path handling. Running the Windows executable through Wine is not considered an officially supported workflow.
+
 Required tools for building:
 
 - Windows 10 or Windows 11, 64-bit.
