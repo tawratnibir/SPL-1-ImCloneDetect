@@ -7,6 +7,10 @@
 *.so
 *.dylib
 *.dll
+
+# Prebuilt runtime files intentionally distributed with ImCloneDetect
+!main/main.exe
+!main/*.dll
 # Visual Studio Code settings
 .vscode/
 *.code-workspace
